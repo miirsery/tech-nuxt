@@ -1,0 +1,124 @@
+@use '../variables/index.scss' as *;
+
+/* stylelint-disable declaration-no-important */
+@mixin generate-display-classes($displays) {
+  @each $display in $displays {
+    .d-#{$display} {
+      display: $display !important;
+    }
+  }
+
+  @each $display in $displays {
+    @each $key, $point in $breakpoints {
+      .d-#{$key}-#{$display} {
+        @include responsive($key) {
+          display: $display !important;
+        }
+      }
+    }
+  }
+}
+
+@mixin flex-utils-classes($screen-name: '') {
+  .ai#{$screen-name}-center {
+    align-items: center !important;
+  }
+
+  .ai#{$screen-name}-flex-start {
+    align-items: flex-start !important;
+  }
+
+  .ai#{$screen-name}-flex-end {
+    align-items: flex-end !important;
+  }
+
+  .jc#{$screen-name}-space-between {
+    justify-content: space-between !important;
+  }
+
+  .jc#{$screen-name}-flex-end {
+    justify-content: flex-end !important;
+  }
+
+  .jc#{$screen-name}-center {
+    justify-content: center !important;
+  }
+
+  .jc#{$screen-name}-flex-start {
+    justify-content: flex-start !important;
+  }
+
+  .fd#{$screen-name}-column {
+    flex-direction: column !important;
+  }
+
+  .fd#{$screen-name}-column-reverse {
+    flex-direction: column-reverse !important;
+  }
+
+  .fd#{$screen-name}-row {
+    flex-direction: row !important;
+  }
+
+  .fd#{$screen-name}-row-reverse {
+    flex-direction: row-reverse !important;
+  }
+
+  .f#{$screen-name}-wrap {
+    flex-wrap: wrap !important;
+  }
+}
+
+@mixin display-classes($screen-name: '') {
+  .d#{$screen-name}-grid {
+    display: grid !important;
+  }
+
+  .d#{$screen-name}-block {
+    display: block !important;
+  }
+
+  .d#{$screen-name}-inline-block {
+    display: inline-block !important;
+  }
+
+  .d#{$screen-name}-flex {
+    display: flex !important;
+  }
+
+  .d#{$screen-name}-inline-flex {
+    display: inline-flex !important;
+  }
+
+  .d#{$screen-name}-inline {
+    display: inline !important;
+  }
+
+  .d#{$screen-name}-none {
+    display: none !important;
+  }
+}
+
+// Util for generate z-index.
+@function z($name) {
+	@if index($z-indexes, $name) {
+		@return (length($z-indexes) - index($z-indexes, $name)) + 1;
+	}
+
+	@warn 'There is no item "#{$name}" in this list; choose one of: #{$z-indexes}';
+	@return null;
+}
+
+@mixin pseudo($display: block, $pos: absolute, $content: ''){
+	content: $content;
+	display: $display;
+	position: $pos;
+}
+
+$z-indexes: (
+	"outdated-browser",
+	"modal",
+	"site-header",
+	"page-wrapper",
+	"site-footer"
+);

@@ -1,0 +1,26 @@
+@use '../variables/index.scss' as *;
+
+@mixin generate-padding-classes($list) {
+  @each $size, $size-value in $list {
+    .px-#{$size} {
+      padding-right: #{$size-value};
+      padding-left: #{$size-value};
+    }
+    .py-#{$size} {
+      padding-top: #{$size-value};
+      padding-bottom: #{$size-value};
+    }
+    .pb-#{$size} {
+      padding-bottom: #{$size-value};
+    }
+    .pt-#{$size} {
+      padding-top: #{$size-value};
+    }
+    .pr-#{$size} {
+      padding-right: #{$size-value};
+    }
+    .pl-#{$size} {
+      padding-left: #{$size-value};
+    }
+  }
+}

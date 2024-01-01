@@ -1,0 +1,32 @@
+@use '../variables/index.scss' as *;
+
+@function ends-with($string, $find) {
+	@return str-length($string) >= str-length($find) && str-slice($string, (str-length($string) - str-length($find) + 1)) == $find;
+}
+
+@mixin generate-text-classes($text-sizes) {
+  @each $key-size, $value-size in $text-sizes {
+		@if (ends-with($key-size, 'body-') or ends-with($key-size, 'button-') or ends-with($key-size, 'overline-lg')) {
+			.text-#{$key-size} {
+				font-size: $value-size;
+				font-weight: 300;
+			}
+		}
+
+		@else {
+			.text-#{$key-size} {
+				font-size: $value-size;
+			}
+		}
+  }
+}
+
+@mixin truncate($lines: 3, $truncation-boundary: 100%) {
+	max-width: $truncation-boundary;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: $lines;
+}
