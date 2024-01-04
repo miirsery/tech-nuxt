@@ -14,6 +14,9 @@ const svgIconsConfig = createSvgIconsPlugin({
 export default defineNuxtConfig({
 	devtools: {
 		enabled: true,
+		timeline: {
+			enabled: true,
+		},
 	},
 	vue: {
 		defineModel: true,
@@ -43,8 +46,12 @@ export default defineNuxtConfig({
 		middleware: './src/app/middleware',
 		pages: './src/pages',
 	},
+	imports: {
+		autoImport: false,
+	},
 	components: {
-		dirs: []
+		global: false,
+		dirs: [],
 	},
 	modules: ['@nuxt/image'],
 	css: ['assets/styles/index.scss'],
@@ -66,7 +73,7 @@ export default defineNuxtConfig({
 		'pages:extend'(pages) {
 			function removePagesMatching(pathPattern: RegExp, filePattern: RegExp, pages: NuxtPage[] = []) {
 				const pagesToRemove = []
-				
+
 				for (const page of pages) {
 					if (pathPattern.test(page.path) || (page.file && filePattern.test(page.file))) {
 						pagesToRemove.push(page)
@@ -74,12 +81,12 @@ export default defineNuxtConfig({
 						removePagesMatching(pathPattern, filePattern, page.children)
 					}
 				}
-				
+
 				for (const page of pagesToRemove) {
 					pages.splice(pages.indexOf(page), 1)
 				}
 			}
-			
+
 			removePagesMatching(/\/ui\//, /\.ts$/, pages)
 		},
 	},
