@@ -27,6 +27,7 @@
   --font-size--icon-sm: 20px;
   --font-size--icon-md: 24px;
   --line-height: 1;
+  --animation-time: 0.15s;
 
   @include generate-color-root-variables;
 
@@ -132,4 +133,5 @@ svg {
 
 *, *::after, *::before {
 	line-height: var(--line-height);
+  font-size: var(--font-size-body-md);
 }
