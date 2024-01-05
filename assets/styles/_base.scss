@@ -27,6 +27,8 @@
   --font-size--icon-sm: 20px;
   --font-size--icon-md: 24px;
   --line-height: 1;
+  --line-height--body-xs: 150%;
+  --line-height--body-md: 1;
   --animation-time: 0.15s;
 
   @include generate-color-root-variables;

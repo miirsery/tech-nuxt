@@ -1,13 +1,369 @@
 <template>
-	<input class="ui-input" v-model="modelValue" />
+  <div
+    :class="uiInputClasses"
+    ref="uiInputRef"
+    @mouseenter="isHovered = true"
+    @mouseleave="isHovered = false"
+    @click="handleFocus"
+  >
+    <template v-if="props.type !== 'textarea'">
+      <div v-if="slots.prepend" class="ui-input__prepend">
+        <slot name="prepend" />
+      </div>
+
+      <div class="ui-input__wrapper" @click="handleFocus" @blurin="handleBlur">
+        <div v-if="slots.prefix" class="ui-input__prefix">
+          <slot name="prefix" />
+        </div>
+
+        <input
+          ref="inputInnerRef"
+          v-model="modelValue"
+          :type="inputType"
+          :autocomplete="props.autocomplete"
+          :disabled="props.disabled"
+          class="ui-input__inner"
+          @input="handleInput"
+          @change="handleChange"
+          @keydown="handleKeydown"
+        />
+
+        <client-only v-if="props.label">
+          <div class="ui-input__label">
+            {{ props.label }}
+          </div>
+        </client-only>
+
+        <div v-if="slots.suffix || props.clearable" class="ui-input__suffix">
+          <slot v-if="!props.clearable" name="suffix" />
+
+          <button v-else type="button" @click="handleClear">
+          <!--  DEBT: Вынести все иконки в отдельный пакет.  -->
+            <ui-icon name="close-circle" />
+          </button>
+        </div>
+      </div>
+
+      <div v-if="slots.append" class="ui-input__append">
+        <slot name="append" />
+      </div>
+    </template>
+
+    <template v-else>
+      <textarea ref="textareaInnerRef" />
+    </template>
+  </div>
 </template>
 
 <script lang="ts" setup>
-const modelValue = defineModel()
+import {computed, onMounted, onUnmounted, type Ref, ref, shallowRef} from "vue";
+import {UiIcon} from "#shared/ui";
+
+// DEBT: Вынести в типы.
+// DEBT: Сделать state = error.
+type ModelValue = string | number | null
+
+type Props = {
+  label?: string
+  type?: 'text' | 'password' | 'textarea' | 'number'
+  clearable?: boolean
+  disabled?: boolean
+  autocomplete?: string
+  class?: string
+}
+
+type Emits = {
+  (event: 'input', value: ModelValue): void
+  (event: 'change', value: ModelValue): void
+  (event: 'keydown', value: KeyboardEvent): void
+  (event: 'clear'): void
+  (event: 'focus'): void
+  (event: 'blur'): void
+}
+
+type Slots = {
+  prepend?: () => HTMLElement
+  append?: () => HTMLElement
+  prefix?: () => HTMLElement
+  suffix?: () => HTMLElement
+}
+
+type TargetElement = HTMLInputElement | HTMLTextAreaElement
+
+type UiInputExposeType = {
+  focus: () => void
+  blur: () => void
+  instance?: Ref<HTMLInputElement | HTMLTextAreaElement | null | undefined>
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  type: 'text',
+  autocomplete: 'new-password',
+  clearable: false,
+  disabled: false,
+  class: ''
+})
+const emits = defineEmits<Emits>()
+const slots = defineSlots<Slots>()
+
+const modelValue = defineModel<ModelValue>()
+
+const uiInputRef = shallowRef<HTMLDivElement | null>(null)
+const inputInnerRef = shallowRef<HTMLInputElement | null>(null)
+const textareaInnerRef  = shallowRef<HTMLTextAreaElement | null>(null)
+
+const isHovered = ref(false)
+const isInFocus = ref(false)
+const isPasswordHidden = ref(true)
+
+const _ref = computed<HTMLInputElement | HTMLTextAreaElement | null>(() => inputInnerRef.value || textareaInnerRef.value)
+const inputType = computed<Props['type']>(() => {
+  if (props.type === 'password' && isPasswordHidden.value) return 'password'
+  if (props.type === 'password' && !isPasswordHidden.value) return 'text'
+
+  return props.type
+})
+const uiInputClasses = computed(() => [
+  'ui-input',
+  { 'ui-input--focus': isInFocus.value || modelValue.length },
+  { 'ui-input--disabled': props.disabled },
+  { 'ui-input--hovered': isHovered.value },
+  { 'input': slots?.prefix },
+  props.class,
+])
+
+const passwordIcon = computed(() => (isPasswordHidden.value ? 'eye-close' : 'eye-open'))
+
+const handlePasswordVisibleToggle = () => {
+  isPasswordHidden.value = !isPasswordHidden.value
+}
+
+const handleInput = (event: Event) => {
+  const { value } = event.target as TargetElement
+
+  emits('input', value as ModelValue)
+}
+
+const handleChange = (event: Event) => {
+  emits('change', (event.target as TargetElement).value as ModelValue)
+}
+
+const handleKeydown = (event: KeyboardEvent) => {
+  emits('keydown', event)
+}
+
+const handleFocus = () => {
+  if (!_ref.value || props.disabled) return
+
+  _ref.value.focus()
+
+  isInFocus.value = true
+
+  emits('focus')
+}
+
+const handleBlur = () => {
+  if (!_ref.value || props.disabled) return
+
+  _ref.value.blur()
+
+  isInFocus.value = false
+
+  emits('blur')
+}
+
+const handleClear = () => {
+  if (!_ref.value || props.disabled) return
+
+  _ref.value.focus()
+  isInFocus.value = true
+
+  emits('clear')
+  emits('input', '')
+  emits('change', '')
+}
+
+const handleOutsideClick = (event: MouseEvent) => {
+  const target = event.target as HTMLElement;
+
+  if (!uiInputRef.value?.contains(target)) {
+    isInFocus.value = false;
+  }
+}
+
+onMounted(() => {
+  document.addEventListener('click', handleOutsideClick)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('click', handleOutsideClick);
+})
+
+defineOptions({
+  name: 'UiInput',
+  inheritAttrs: false,
+})
+
+// DEBT: Типизировать.
+defineExpose<UiInputExposeType>({
+  instance: _ref,
+  focus: handleFocus,
+  blur: handleBlur,
+})
 </script>
 
 <style lang="scss" scoped>
 .ui-input {
-	z-index: z('modal');
+  $root: &;
+  --ui-input-border-radius: 8px;
+  --ui-input-text-color: var(--color-grey-b4);
+  --ui-input-border-color: var(--ui-input-text-color);
+  --ui-input-bg-color: var(--color-white);
+  --ui-input-icon-color: var(--ui-input-text-color);
+  --ui-input-hover-border-color: var(--color-grey-71);
+  --ui-input-focus-border-color: var(--color-primary-100);
+  --ui-input-disabled-border-color: var(--color-grey-cb);
+  --ui-input-disabled-text-color: var(--color-grey-cb);
+  --ui-input-padding-horizontal: 12px;
+  --ui-input-padding-vertical: 12px;
+  --ui-input-color-error: var(--color-error);
+
+  min-height: 48px;
+  height: auto;
+  color: var(--ui-input-text-color);
+  border-color: var(--ui-input-border-color);
+  border-width: 1px;
+  border-style: solid;
+  border-radius: var(--ui-input-border-radius);
+  transition: all var(--animation-time) ease,
+              color var(--animation-time) ease;
+  font-size: var(--font-size-body-md);
+  line-height: var(--line-height--body-xs);
+  position: relative;
+  width: 100%;
+
+  &__wrapper {
+    display: grid;
+    grid-template-areas: 'prefix main suffix';
+    grid-template-columns: min-content 1fr min-content;
+    padding: var(--ui-input-padding-vertical) var(--ui-input-padding-horizontal);
+  }
+
+  &__inner {
+    height: 24px;
+    border: none;
+    outline: none;
+  }
+
+  &__inner,
+  &__textarea-inner {
+    font-size: var(--font-size--lg);
+
+    &::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
+  }
+
+  &__prefix,
+  &__suffix {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--font-size--icon-md);
+    height: var(--font-size--icon-md);
+
+    button {
+      width: var(--font-size--icon-md);
+      height: var(--font-size--icon-md);
+    }
+
+    :deep(svg) {
+      font-size: var(--font-size--icon-md);
+      color: var(--ui-input-hover-border-color);
+    }
+  }
+
+  &__prefix {
+    margin-right: 8px;
+    grid-area: prefix;
+  }
+
+  &__suffix {
+    margin-left: 8px;
+    grid-area: suffix;
+  }
+
+  &--hovered {
+    color: var(--ui-input-hover-border-color);
+    border-color: var(--ui-input-hover-border-color);
+
+    :deep(svg) {
+      color: var(--ui-input-hover-border-color);
+    }
+  }
+
+  &--focus {
+    box-shadow: 0 0 2px 0 var(--ui-input-focus-border-color);
+    border-color: var(--ui-input-focus-border-color);
+    color: var(--ui-input-focus-border-color);
+
+    :deep(svg) {
+      color: var(--ui-input-focus-border-color);
+    }
+
+    #{$root}__label {
+      top: -6px;
+      left: 22px;
+      background-color: var(--color-white);
+      font-size: var(--font-size-body-xs);
+      font-weight: 300;
+      line-height: 1;
+      box-shadow: 0 0 5px 1px var(--color-white);
+    }
+  }
+
+  &__label {
+    font-size: var(--font-size-body-md);
+    line-height: var(--line-height--body-xs);
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    transition: top var(--animation-time) ease,
+                left var(--animation-time) ease;
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+  &--disabled {
+    color: var(--ui-input-disabled-text-color);
+    border-color: var(--ui-input-disabled-border-color);
+    cursor: not-allowed;
+
+    button {
+      cursor: not-allowed;
+    }
+
+    #{$root}__inner {
+      cursor: not-allowed;
+      background: transparent;
+    }
+
+    :deep(svg) {
+      color: var(--ui-input-disabled-text-color);
+    }
+  }
+
+  &--with-prefix {
+    #{$root}__label {
+      left: 44px;
+    }
+
+    &#{$root}--focus {
+      #{$root}__label {
+        left: 22px;
+      }
+    }
+  }
 }
 </style>

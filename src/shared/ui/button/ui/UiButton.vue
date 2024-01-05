@@ -1,5 +1,6 @@
 <template>
 	<component
+    ref="buttonRef"
 		:is="props.as"
 		:disabled="props.disabled || props.loading"
 		:class="classes"
@@ -21,8 +22,9 @@
 </template>
 
 <script lang="ts" setup>
-// DEBT: Попробовать добавить generic (Динамическая типизация)
-import {computed, useSlots} from "vue";
+// DEBT: Добавить типизацию.
+// DEBT: Добавить type="button" дефолтно.
+import {computed, type Ref, ref, useSlots} from "vue";
 import type {NuxtLink} from "#components";
 
 type Props = {
@@ -47,6 +49,8 @@ const props = withDefaults(defineProps<Props>(), {
 	loading: false,
 })
 
+const buttonRef = ref<HTMLButtonElement | HTMLAnchorElement | typeof NuxtLink>()
+
 const classes = computed(() => {
 	return [
 		'ui-button',
@@ -60,6 +64,15 @@ const classes = computed(() => {
 			'ui-button--only-icon': props.onlyIcon,
 		},
 	]
+})
+
+defineOptions({
+  name: 'UiButton',
+})
+
+// DEBT: Типизировать.
+defineExpose({
+  ref,
 })
 </script>
 
@@ -82,7 +95,6 @@ const classes = computed(() => {
 	background: var(--ui-button--background);
 	transition-duration: var(--animation-time);
 	padding: var(--ui-button--padding-vertical) var(--ui-button--padding-horizontal);
-
 
 	&__suffix {
 		margin-left: 8px;
