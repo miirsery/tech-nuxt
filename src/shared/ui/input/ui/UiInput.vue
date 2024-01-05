@@ -314,12 +314,12 @@ defineExpose<UiInputExposeType>({
 
     #{$root}__label {
       top: -6px;
-      left: 22px;
+      left: 18px;
       background-color: var(--color-white);
       font-size: var(--font-size-body-xs);
       font-weight: 300;
       line-height: 1;
-      box-shadow: 0 0 5px 1px var(--color-white);
+      box-shadow: 0 0 5px 3px var(--color-white);
     }
   }
 
@@ -330,7 +330,8 @@ defineExpose<UiInputExposeType>({
     left: 12px;
     top: 12px;
     transition: top var(--animation-time) ease,
-                left var(--animation-time) ease;
+                left var(--animation-time) ease,
+                font-size var(--animation-time) ease;
     padding-left: 4px;
     padding-right: 4px;
   }
