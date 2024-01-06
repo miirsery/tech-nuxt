@@ -234,6 +234,8 @@
             </template>
           </ui-input>
         </form-item>
+
+        <ui-input v-model="value" type="textarea" />
       </div>
     </div>
 	</div>
@@ -266,6 +268,7 @@ const value = ref('')
   column-gap: 40px;
   padding: 20px;
   border: 1px dashed #9747FF;
+  border-radius: 8px;
 }
 
 .column {

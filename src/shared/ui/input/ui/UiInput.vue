@@ -11,7 +11,7 @@
         <slot name="prepend" />
       </div>
 
-      <div class="ui-input__wrapper" @click="handleFocus" @blurin="handleBlur">
+      <div class="ui-input__wrapper" @click="handleFocus" @blurin="handleBlur" tabindex="-1">
         <div v-if="isPrefixVisible" class="ui-input__prefix">
           <slot v-if="!isPasswordType" name="prefix" />
 
@@ -134,7 +134,7 @@ const inputType = computed<Props['type']>(() => {
 })
 const uiInputClasses = computed(() => [
   'ui-input',
-  { 'ui-input--focus': isInFocus.value || modelValue.value.length },
+  { 'ui-input--focus': isInFocus.value || modelValue.value?.toString().length },
   { 'ui-input--disabled': props.disabled },
   { 'ui-input--hovered': isHovered.value },
   { 'ui-input--with-prefix': isPrefixVisible.value },
@@ -254,12 +254,17 @@ defineExpose<UiInputExposeType>({
     grid-template-areas: 'prefix main suffix';
     grid-template-columns: min-content 1fr min-content;
     padding: var(--ui-input-padding-vertical) var(--ui-input-padding-horizontal);
+    cursor: text;
   }
 
   &__inner {
     height: 24px;
     border: none;
     outline: none;
+    width: 100%;
+    flex-grow: 1;
+    -webkit-appearance: none;
+    grid-area: main;
   }
 
   &__inner,
