@@ -62,7 +62,7 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, onMounted, onUnmounted, type Ref, ref, shallowRef} from "vue";
+import {computed, onMounted, onUnmounted, type Ref, ref, shallowRef, watch} from "vue";
 import {UiIcon} from "#shared/ui";
 
 // DEBT: Вынести в типы.
@@ -134,7 +134,7 @@ const inputType = computed<Props['type']>(() => {
 })
 const uiInputClasses = computed(() => [
   'ui-input',
-  { 'ui-input--focus': isInFocus.value || modelValue.length },
+  { 'ui-input--focus': isInFocus.value || modelValue.value.length },
   { 'ui-input--disabled': props.disabled },
   { 'ui-input--hovered': isHovered.value },
   { 'ui-input--with-prefix': isPrefixVisible.value },
@@ -165,7 +165,6 @@ const handleFocus = () => {
   if (!_ref.value || props.disabled) return
 
   _ref.value.focus()
-
   isInFocus.value = true
 
   emits('focus')
@@ -175,7 +174,6 @@ const handleBlur = () => {
   if (!_ref.value || props.disabled) return
 
   _ref.value.blur()
-
   isInFocus.value = false
 
   emits('blur')
@@ -184,8 +182,9 @@ const handleBlur = () => {
 const handleClear = () => {
   if (!_ref.value || props.disabled) return
 
-  _ref.value.focus()
+  modelValue.value = ''
   isInFocus.value = true
+  _ref.value.focus()
 
   emits('clear')
   emits('input', '')
@@ -213,7 +212,6 @@ defineOptions({
   inheritAttrs: false,
 })
 
-// DEBT: Типизировать.
 defineExpose<UiInputExposeType>({
   instance: _ref,
   focus: handleFocus,
@@ -330,6 +328,10 @@ defineExpose<UiInputExposeType>({
       line-height: 1;
       box-shadow: 0 0 5px 3px var(--color-white);
     }
+
+    #{$root}__inner {
+      color: var(--ui-input-focus-border-color);
+    }
   }
 
   &__label {
@@ -349,6 +351,7 @@ defineExpose<UiInputExposeType>({
     color: var(--ui-input-disabled-text-color);
     border-color: var(--ui-input-disabled-border-color);
     cursor: not-allowed;
+    box-shadow: none;
 
     button {
       cursor: not-allowed;
@@ -357,6 +360,7 @@ defineExpose<UiInputExposeType>({
     #{$root}__inner {
       cursor: not-allowed;
       background: transparent;
+      color: var(--ui-input-disabled-text-color);
     }
 
     :deep(svg) {

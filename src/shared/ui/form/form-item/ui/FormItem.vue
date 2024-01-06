@@ -54,7 +54,7 @@ defineOptions({
 <style lang="scss" scoped>
 .ui-form-item {
   &__content {
-    margin-top: 4px;
+    margin-top: 8px;
   }
 
   &__error {

@@ -243,7 +243,6 @@
 import {useHead} from "#imports";
 import {ref} from "vue";
 import {UiButton, UiIcon, UiInput} from "#shared/ui";
-import {NuxtLink} from "#components";
 import FormItem from "#shared/ui/form/form-item/ui/FormItem.vue";
 
 useHead({
