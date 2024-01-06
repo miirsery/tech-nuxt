@@ -1,7 +1,7 @@
 import type {InjectionKey, MaybeRef, Ref} from 'vue'
 import {computed, getCurrentInstance, inject, unref} from 'vue'
 
-export type ElIdInjectionContext = {
+export type IdInjectionContext = {
   prefix: number
   current: number
 }
@@ -11,10 +11,10 @@ const defaultIdInjection = {
   current: 0,
 }
 
-export const ID_INJECTION_KEY: InjectionKey<ElIdInjectionContext> =
+export const ID_INJECTION_KEY: InjectionKey<IdInjectionContext> =
   Symbol('elIdInjection')
 
-export const useIdInjection = (): ElIdInjectionContext => {
+export const useIdInjection = (): IdInjectionContext => {
   return getCurrentInstance()
     ? inject(ID_INJECTION_KEY, defaultIdInjection)
     : defaultIdInjection

@@ -213,6 +213,8 @@
       <div class="column">
         <ui-input v-model="value" label="label" clearable />
 
+        <ui-input v-model="value" label="label" type="password" />
+
         <ui-input v-model="value" label="label" clearable class="ui-input--focus">
           <template #prefix>
             <ui-icon name="profile" />

@@ -12,8 +12,10 @@
       </div>
 
       <div class="ui-input__wrapper" @click="handleFocus" @blurin="handleBlur">
-        <div v-if="slots.prefix" class="ui-input__prefix">
-          <slot name="prefix" />
+        <div v-if="isPrefixVisible" class="ui-input__prefix">
+          <slot v-if="!isPasswordType" name="prefix" />
+
+          <ui-icon v-else name="key" />
         </div>
 
         <input
@@ -34,12 +36,16 @@
           </div>
         </client-only>
 
-        <div v-if="slots.suffix || props.clearable" class="ui-input__suffix">
+        <div v-if="isSuffixVisible" class="ui-input__suffix">
           <slot v-if="!props.clearable" name="suffix" />
 
-          <button v-else type="button" @click="handleClear">
+          <button v-else-if="!isPasswordType && props.clearable" type="button" @click="handleClear">
           <!--  DEBT: Вынести все иконки в отдельный пакет.  -->
             <ui-icon name="close-circle" />
+          </button>
+
+          <button type="button" v-if="isPasswordType" @click="handlePasswordVisibleChange">
+            <ui-icon :name="passwordIcon" />
           </button>
         </div>
       </div>
@@ -117,9 +123,12 @@ const isInFocus = ref(false)
 const isPasswordHidden = ref(true)
 
 const _ref = computed<HTMLInputElement | HTMLTextAreaElement | null>(() => inputInnerRef.value || textareaInnerRef.value)
+const isPasswordType = computed(() => props.type === 'password')
+const isSuffixVisible = computed(() => slots.suffix || props.clearable || isPasswordType.value)
+const isPrefixVisible = computed(() => slots.prefix || isPasswordType.value)
 const inputType = computed<Props['type']>(() => {
-  if (props.type === 'password' && isPasswordHidden.value) return 'password'
-  if (props.type === 'password' && !isPasswordHidden.value) return 'text'
+  if (isPasswordType.value && isPasswordHidden.value) return 'password'
+  if (isPasswordType.value && !isPasswordHidden.value) return 'text'
 
   return props.type
 })
@@ -128,13 +137,13 @@ const uiInputClasses = computed(() => [
   { 'ui-input--focus': isInFocus.value || modelValue.length },
   { 'ui-input--disabled': props.disabled },
   { 'ui-input--hovered': isHovered.value },
-  { 'ui-input--with-prefix': slots?.prefix },
+  { 'ui-input--with-prefix': isPrefixVisible.value },
   props.class,
 ])
 
 const passwordIcon = computed(() => (isPasswordHidden.value ? 'eye-close' : 'eye-open'))
 
-const handlePasswordVisibleToggle = () => {
+const handlePasswordVisibleChange = () => {
   isPasswordHidden.value = !isPasswordHidden.value
 }
 
