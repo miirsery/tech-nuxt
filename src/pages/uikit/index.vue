@@ -219,7 +219,19 @@
           </template>
         </ui-input>
 
-        <ui-input v-model="value" label="label" disabled clearable />
+        <ui-input v-model="value" label="label" disabled clearable>
+          <template #prefix>
+            <ui-icon name="profile" />
+          </template>
+        </ui-input>
+
+        <form-item error="supporting text" label="Профиль">
+          <ui-input v-model="value" label="label" clearable>
+            <template #prefix>
+              <ui-icon name="profile" />
+            </template>
+          </ui-input>
+        </form-item>
       </div>
     </div>
 	</div>
@@ -227,13 +239,14 @@
 
 <script lang="ts" setup>
 import {useHead} from "#imports";
+import {ref} from "vue";
+import {UiButton, UiIcon, UiInput} from "#shared/ui";
+import {NuxtLink} from "#components";
+import FormItem from "#shared/ui/form/form-item/ui/FormItem.vue";
 
 useHead({
   title: 'UIKit'
 })
-import {ref} from "vue";
-import {UiButton, UiIcon, UiInput} from "#shared/ui";
-import {NuxtLink} from "#components";
 
 const value = ref('')
 </script>

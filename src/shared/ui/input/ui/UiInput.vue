@@ -128,7 +128,7 @@ const uiInputClasses = computed(() => [
   { 'ui-input--focus': isInFocus.value || modelValue.length },
   { 'ui-input--disabled': props.disabled },
   { 'ui-input--hovered': isHovered.value },
-  { 'input': slots?.prefix },
+  { 'ui-input--with-prefix': slots?.prefix },
   props.class,
 ])
 
