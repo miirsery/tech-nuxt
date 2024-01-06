@@ -208,13 +208,48 @@
         </ui-button>
       </div>
     </div>
+
+    <div class="box">
+      <div class="column">
+        <ui-input v-model="value" label="label" clearable />
+
+        <ui-input v-model="value" label="label" type="password" />
+
+        <ui-input v-model="value" label="label" clearable class="ui-input--focus">
+          <template #prefix>
+            <ui-icon name="profile" />
+          </template>
+        </ui-input>
+
+        <ui-input v-model="value" label="label" disabled clearable>
+          <template #prefix>
+            <ui-icon name="profile" />
+          </template>
+        </ui-input>
+
+        <form-item error="supporting text" label="Профиль">
+          <ui-input v-model="value" label="label" clearable>
+            <template #prefix>
+              <ui-icon name="profile" />
+            </template>
+          </ui-input>
+        </form-item>
+
+        <ui-input v-model="value" type="textarea" label="Я textarea..." />
+      </div>
+    </div>
 	</div>
 </template>
 
 <script lang="ts" setup>
+import {useHead} from "#imports";
 import {ref} from "vue";
 import {UiButton, UiIcon, UiInput} from "#shared/ui";
-import {NuxtLink} from "#components";
+import FormItem from "#shared/ui/form/form-item/ui/FormItem.vue";
+
+useHead({
+  title: 'UIKit'
+})
 
 const value = ref('')
 </script>
@@ -222,6 +257,9 @@ const value = ref('')
 <style lang="scss" scoped>
 .uikit-page {
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .box {
@@ -230,6 +268,7 @@ const value = ref('')
   column-gap: 40px;
   padding: 20px;
   border: 1px dashed #9747FF;
+  border-radius: 8px;
 }
 
 .column {
