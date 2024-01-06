@@ -67,9 +67,9 @@ defineOptions({
 
   &.with-error {
     :deep(.ui-input) {
-      --ui-input-border-color: var(--color-error);
-      --ui-input-text-color: var(--color-error);
-      --ui-input-hover-border-color: var(--color-error);
+      --ui-input-border-color: var(--ui-input-color-error);
+      --ui-input-text-color: var(--ui-input-color-error);
+      --ui-input-hover-border-color: var(--ui-input-color-error);
     }
   }
 }

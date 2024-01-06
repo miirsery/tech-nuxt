@@ -24,6 +24,9 @@
           :type="inputType"
           :autocomplete="props.autocomplete"
           :disabled="props.disabled"
+          :readonly="props.readonly"
+          :minlength="props.minlength"
+          :maxlength="props.maxlength"
           class="ui-input__inner"
           @input="handleInput"
           @change="handleChange"
@@ -56,7 +59,26 @@
     </template>
 
     <template v-else>
-      <textarea ref="textareaInnerRef" />
+      <textarea
+        class="ui-input__textarea-inner"
+        ref="textareaInnerRef"
+        :autocomplete="props.autocomplete"
+        :placeholder="props.label"
+        :disabled="props.disabled"
+        :readonly="props.readonly"
+        @input="handleInput"
+        @change="handleChange"
+        @keydown="handleKeydown"
+      />
+
+<!--      DEBT: Реализовать функционал.-->
+<!--      <span-->
+<!--        v-if="isWordLimitVisible"-->
+<!--        :style="countStyle"-->
+<!--        :class="nsInput.e('count')"-->
+<!--      >-->
+<!--        {{ textLength }} / {{ maxlength }}-->
+<!--      </span>-->
     </template>
   </div>
 </template>
@@ -64,6 +86,7 @@
 <script lang="ts" setup>
 import {computed, onMounted, onUnmounted, type Ref, ref, shallowRef, watch} from "vue";
 import {UiIcon} from "#shared/ui";
+import type {NonNegativeIntegerType} from "#shared/types/helpers";
 
 // DEBT: Вынести в типы.
 // DEBT: Сделать state = error.
@@ -76,6 +99,12 @@ type Props = {
   disabled?: boolean
   autocomplete?: string
   class?: string
+  rows?: number
+  autosize?: { minRows?: number, maxRows?: number } | boolean
+  readonly?: boolean
+  minlength?: number
+  maxlength?: number
+  resize?: boolean
 }
 
 type Emits = {
@@ -105,9 +134,13 @@ type UiInputExposeType = {
 const props = withDefaults(defineProps<Props>(), {
   type: 'text',
   autocomplete: 'new-password',
+  class: '',
   clearable: false,
   disabled: false,
-  class: ''
+  rows: 2,
+  autosize: false,
+  readonly: false,
+  resize: true,
 })
 const emits = defineEmits<Emits>()
 const slots = defineSlots<Slots>()
@@ -138,6 +171,8 @@ const uiInputClasses = computed(() => [
   { 'ui-input--disabled': props.disabled },
   { 'ui-input--hovered': isHovered.value },
   { 'ui-input--with-prefix': isPrefixVisible.value },
+  { 'ui-input--not-resize': !props.resize },
+  { 'ui-input--type-textarea': props.type === 'textarea' },
   props.class,
 ])
 
@@ -277,6 +312,14 @@ defineExpose<UiInputExposeType>({
     }
   }
 
+  &__textarea-inner {
+    vertical-align: bottom;
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+  }
+
   &__prefix,
   &__suffix {
     display: flex;
@@ -382,6 +425,19 @@ defineExpose<UiInputExposeType>({
       #{$root}__label {
         left: 22px;
       }
+    }
+  }
+
+  &--not-resize {
+    #{$root}__textarea-inner {
+      resize: none;
+    }
+  }
+
+  &--type-textarea {
+    #{$root}__textarea-inner {
+      min-height: 56px;
+      padding: var(--ui-input-padding-vertical) var(--ui-input-padding-horizontal);
     }
   }
 }

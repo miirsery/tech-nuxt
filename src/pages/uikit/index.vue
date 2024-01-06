@@ -235,7 +235,7 @@
           </ui-input>
         </form-item>
 
-        <ui-input v-model="value" type="textarea" />
+        <ui-input v-model="value" type="textarea" label="Я textarea..." />
       </div>
     </div>
 	</div>
