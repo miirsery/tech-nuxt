@@ -53,7 +53,7 @@ export default defineNuxtConfig({
 		global: false,
 		dirs: [],
 	},
-	modules: ['@nuxt/image'],
+	modules: ['@nuxt/image', '@vueuse/nuxt'],
 	css: ['assets/styles/index.scss'],
 	vite: {
 		css: {

@@ -11,7 +11,7 @@
 
       <!--  DEBT: Добавить <slot name="error" />  -->
       <transition>
-        <div v-if="props.error" class="ui-form-item__error">
+        <div v-if="props?.error" class="ui-form-item__error">
           {{ props.error }}
         </div>
       </transition>
@@ -35,7 +35,7 @@ const props = withDefaults(defineProps<Props>(), {
   showMessage: true,
 })
 
-const isValid = ref(false)
+const isValid = ref(true)
 const isRequired = ref(props.required)
 
 const formItemClasses = computed(() => {

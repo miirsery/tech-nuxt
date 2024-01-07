@@ -245,9 +245,7 @@
           Открыть диалог
         </ui-button>
 
-        <ui-dialog v-model="isDialogVisible">
-          Я диалог
-        </ui-dialog>
+        <change-full-name v-model="isDialogVisible" />
       </div>
     </div>
 	</div>
@@ -258,6 +256,7 @@ import {useHead} from "#imports";
 import {ref} from "vue";
 import {UiButton, UiDialog, UiIcon, UiInput} from "#shared/ui";
 import UiFormItem from "#shared/ui/form/form-item/ui/FormItem.vue";
+import {ChangeFullName} from "#features/profile";
 
 useHead({
   title: 'UIKit'
@@ -273,6 +272,10 @@ const isDialogVisible = ref(false)
   display: flex;
   flex-direction: column;
   gap: 20px;
+
+  :deep(.ui-button) {
+    margin: 0;
+  }
 }
 
 .box {

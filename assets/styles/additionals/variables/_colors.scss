@@ -42,9 +42,12 @@ $color--success-light: #D1F7E5;
 $box-shadow-1: -2px 2px 15px -1px rgba(113, 113, 113, 0.12);
 $box-shadow-2: -2px 2px 20px -1px rgba(113, 113, 113, 0.20);
 
+$color--dark-60: rgba($color--dark, 0.6);
+
 $colors: (
   white: $color--white,
   dark: $color--dark,
+  dark-60: $color--dark-60,
   primary: $color--primary,
   secondary: $color--secondary,
   primary-25: $color--primary-25,
