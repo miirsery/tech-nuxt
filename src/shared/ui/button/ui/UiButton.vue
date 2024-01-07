@@ -4,6 +4,7 @@
 		:is="props.as"
 		:disabled="props.disabled || props.loading"
 		:class="classes"
+    :type="props.as === 'button' ? props.type : null"
 		v-bind="$attrs"
 		v-on="$attrs"
 	>
@@ -32,6 +33,7 @@ type Props = {
 	size?: 'md' | 'sm'
 	loading?: boolean
 	disabled?: boolean
+  type?: 'button' | 'submit'
 	appearance?: 'primary' | 'secondary'
 	fillStyle?: 'fill' | 'outlined' | 'text' | 'small-text'
 	onlyIcon?: boolean
@@ -42,6 +44,7 @@ const slots = useSlots()
 const props = withDefaults(defineProps<Props>(), {
 	as: 'button',
 	appearance: 'primary',
+  type: 'button',
 	size: 'md',
   fillStyle: 'fill',
 	onlyIcon: false,
@@ -96,7 +99,11 @@ defineExpose({
 	transition-duration: var(--animation-time);
 	padding: var(--ui-button--padding-vertical) var(--ui-button--padding-horizontal);
 
-	&__suffix {
+  &:has(+ .ui-button) {
+    margin-right: 16px;
+  }
+
+  &__suffix {
 		margin-left: 8px;
 	}
 

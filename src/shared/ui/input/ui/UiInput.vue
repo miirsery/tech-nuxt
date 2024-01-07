@@ -5,6 +5,7 @@
     @mouseenter="isHovered = true"
     @mouseleave="isHovered = false"
     @click="handleFocus"
+    v-on-click-outside="handleOutsideClick"
   >
     <template v-if="props.type !== 'textarea'">
       <div v-if="slots.prepend" class="ui-input__prepend">
@@ -87,6 +88,7 @@
 import {computed, onMounted, onUnmounted, type Ref, ref, shallowRef, watch} from "vue";
 import {UiIcon} from "#shared/ui";
 import type {NonNegativeIntegerType} from "#shared/types/helpers";
+import { vOnClickOutside } from '@vueuse/components'
 
 // DEBT: Вынести в типы.
 // DEBT: Сделать state = error.
@@ -233,14 +235,6 @@ const handleOutsideClick = (event: MouseEvent) => {
     isInFocus.value = false;
   }
 }
-
-onMounted(() => {
-  document.addEventListener('click', handleOutsideClick)
-})
-
-onUnmounted(() => {
-  document.removeEventListener('click', handleOutsideClick);
-})
 
 defineOptions({
   name: 'UiInput',

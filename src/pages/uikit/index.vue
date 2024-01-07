@@ -209,33 +209,43 @@
       </div>
     </div>
 
-    <div class="box">
-      <div class="column">
-        <ui-input v-model="value" label="label" clearable />
+    <div class="d-flex" :style="{gap: '20px'}">
+      <div class="box">
+        <div class="column">
+          <ui-input v-model="value" label="label" clearable />
 
-        <ui-input v-model="value" label="label" type="password" />
+          <ui-input v-model="value" label="label" type="password" />
 
-        <ui-input v-model="value" label="label" clearable class="ui-input--focus">
-          <template #prefix>
-            <ui-icon name="profile" />
-          </template>
-        </ui-input>
-
-        <ui-input v-model="value" label="label" disabled clearable>
-          <template #prefix>
-            <ui-icon name="profile" />
-          </template>
-        </ui-input>
-
-        <form-item error="supporting text" label="Профиль">
-          <ui-input v-model="value" label="label" clearable>
+          <ui-input v-model="value" label="label" clearable class="ui-input--focus">
             <template #prefix>
               <ui-icon name="profile" />
             </template>
           </ui-input>
-        </form-item>
 
-        <ui-input v-model="value" type="textarea" label="Я textarea..." />
+          <ui-input v-model="value" label="label" disabled clearable>
+            <template #prefix>
+              <ui-icon name="profile" />
+            </template>
+          </ui-input>
+
+          <ui-form-item error="supporting text" label="Профиль">
+            <ui-input v-model="value" label="label" clearable>
+              <template #prefix>
+                <ui-icon name="profile" />
+              </template>
+            </ui-input>
+          </ui-form-item>
+
+          <ui-input v-model="value" type="textarea" label="Я textarea..." />
+        </div>
+      </div>
+
+      <div class="box">
+        <ui-button @click="isDialogVisible = !isDialogVisible">
+          Открыть диалог
+        </ui-button>
+
+        <change-full-name v-model="isDialogVisible" />
       </div>
     </div>
 	</div>
@@ -244,14 +254,16 @@
 <script lang="ts" setup>
 import {useHead} from "#imports";
 import {ref} from "vue";
-import {UiButton, UiIcon, UiInput} from "#shared/ui";
-import FormItem from "#shared/ui/form/form-item/ui/FormItem.vue";
+import {UiButton, UiDialog, UiIcon, UiInput} from "#shared/ui";
+import UiFormItem from "#shared/ui/form/form-item/ui/FormItem.vue";
+import {ChangeFullName} from "#features/profile";
 
 useHead({
   title: 'UIKit'
 })
 
 const value = ref('')
+const isDialogVisible = ref(false)
 </script>
 
 <style lang="scss" scoped>
@@ -260,6 +272,10 @@ const value = ref('')
   display: flex;
   flex-direction: column;
   gap: 20px;
+
+  :deep(.ui-button) {
+    margin: 0;
+  }
 }
 
 .box {
