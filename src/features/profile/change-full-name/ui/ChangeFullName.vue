@@ -42,13 +42,15 @@ const handleFormSubmit = async () => {
     margin-top: 32px;
   }
 
-  :deep(.ui-dialog-content) {
-    padding: 24px;
-    width: 344px;
-  }
-
   .ui-button {
     width: 162px;
   }
+}
+</style>
+
+<style lang="scss">
+.ui-dialog-content {
+  padding: 24px;
+  width: 344px;
 }
 </style>

@@ -1,40 +1,46 @@
 <template>
-    <!-- DEBT: Слишком резко появляется диалог. Исправить  -->
-  <div :class="props.class">
-    <transition
-      name="fade"
-      appear
+  <!-- DEBT: Слишком резко появляется диалог. Исправить  -->
+  <teleport
+    :to="appendTo"
+    :disabled="appendTo !== 'body' ? false : !appendToBody"
     >
-      <div
-        v-if="modelValue"
-        class="ui-dialog__overlay"
-        @click="handleClose"
-        :style="{ zIndex: props.zIndex }"
+    <div :class="props.class">
+      <transition
+        name="fade"
+        appear
       >
         <div
-          role="dialog"
-          aria-modal="true"
+          v-if="modelValue"
+          class="ui-dialog__overlay"
+          @click="handleClose"
+          :style="{ zIndex: props.zIndex }"
         >
-          <dialog-content
-            :title="props.title"
-            :show-close="props.showClose"
-            @click.stop
-            @close="handleClose"
+          <div
+            role="dialog"
+            aria-modal="true"
           >
-            <slot />
-          </dialog-content>
+            <dialog-content
+              :title="props.title"
+              :show-close="props.showClose"
+              @click.stop
+              @close="handleClose"
+            >
+              <slot />
+            </dialog-content>
+          </div>
         </div>
-      </div>
-    </transition>
-  </div>
+      </transition>
+    </div>
+  </teleport>
 </template>
 
 <script lang="ts" setup>
 // DEBT: Типизировать
 import DialogContent from "#shared/ui/dialog/dialog-content/ui/DialogContent.vue";
 
+// DEBT: Типизировать
 type Props = {
-  appendTo?: any
+  appendTo?: string | HTMLElement
   appendToBody?: boolean
   zIndex?: number
   title?: string
@@ -46,6 +52,7 @@ const props = withDefaults(defineProps<Props>(), {
   appendToBody: false,
   zIndex: 100,
   showClose: false,
+  appendTo: 'body',
 })
 
 const modelValue = defineModel<boolean>()
