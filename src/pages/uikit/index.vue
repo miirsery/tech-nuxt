@@ -248,13 +248,17 @@
         <change-full-name v-model="isDialogVisible" />
       </div>
     </div>
+
+    <div class="box">
+      <ui-product-characteristics :characteristics="characteristics" />
+    </div>
 	</div>
 </template>
 
 <script lang="ts" setup>
 import {useHead} from "#imports";
 import {ref} from "vue";
-import {UiButton, UiDialog, UiIcon, UiInput} from "#shared/ui";
+import {UiButton, UiDialog, UiIcon, UiInput, UiProductCharacteristics} from "#shared/ui";
 import UiFormItem from "#shared/ui/form/form-item/ui/FormItem.vue";
 import {ChangeFullName} from "#features/profile";
 
@@ -264,6 +268,21 @@ useHead({
 
 const value = ref('')
 const isDialogVisible = ref(false)
+
+const characteristics = [
+  {
+    title: 'Дисплей',
+    value: 'Большой'
+  },
+  {
+    title: 'Разрешение',
+    value: '1600x900'
+  },
+  {
+    title: 'Цена',
+    value: '9 900 р'
+  }
+]
 </script>
 
 <style lang="scss" scoped>
