@@ -43,6 +43,8 @@ $box-shadow-1: -2px 2px 15px -1px rgba(113, 113, 113, 0.12);
 $box-shadow-2: -2px 2px 20px -1px rgba(113, 113, 113, 0.20);
 
 $color--dark-60: rgba($color--dark, 0.6);
+$color--primary-30: rgba($color--primary, 0.3);
+$color--primary-70: rgba($color--primary, 0.7);
 
 $colors: (
   white: $color--white,
@@ -51,7 +53,9 @@ $colors: (
   primary: $color--primary,
   secondary: $color--secondary,
   primary-25: $color--primary-25,
+  primary-30: $color--primary-30,
   primary-50: $color--primary-50,
+  primary-70: $color--primary-70,
   primary-75: $color--primary-75,
   primary-100: $color--primary-100,
   primary-200: $color--primary-200,

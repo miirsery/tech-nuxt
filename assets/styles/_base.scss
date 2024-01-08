@@ -47,6 +47,11 @@
   }
 }
 
+*, *::after, *::before {
+  line-height: var(--line-height);
+  font-size: var(--font-size-body-md);
+}
+
 html {
   font-family: $font;
   scroll-behavior: smooth;
@@ -124,6 +129,38 @@ svg {
   }
 }
 
+a {
+  color: var(--color-dark);
+  position: relative;
+
+  &:visited {
+    color: var(--color-dark);
+  }
+}
+
+.router-link-active {
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    border-bottom: 1px solid transparent;
+    border-image: linear-gradient(
+        147.38deg,
+        var(--color-primary-30) 0,
+        var(--color-primary-70) 50.93%,
+        var(--color-primary-30) 100%,
+    );
+    border-image-slice: 1;
+    width: 100% !important; // Перекрывает width в ui-header
+    transition: width var(--animation-time) linear;
+  }
+}
+
 .container {
   width: 100%;
   height: 100%;
@@ -131,9 +168,4 @@ svg {
   padding: 0 var(--container-padding);
   margin-right: auto;
   margin-left: auto;
-}
-
-*, *::after, *::before {
-	line-height: var(--line-height);
-  font-size: var(--font-size-body-md);
 }
