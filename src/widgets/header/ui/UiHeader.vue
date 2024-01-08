@@ -1,0 +1,153 @@
+<template>
+  <header class="ui-header">
+    <div class="ui-header__inner container">
+      <nuxt-link class="ui-header__logo" :to="{ name: ROUTE_NAMES.MAIN }">
+        <ui-icon name="logo" />
+      </nuxt-link>
+
+      <nav>
+        <ul class="ui-header__links">
+          <li class="ui-header__link">
+            <nuxt-link :to="{ name: ROUTE_NAMES.MAIN }">
+              Home
+            </nuxt-link>
+          </li>
+          <li class="ui-header__link">
+            <nuxt-link :to="{ name: ROUTE_NAMES.PRODUCTS }">
+              Products
+            </nuxt-link>
+          </li>
+<!--          <li class="ui-header__link">-->
+<!--            <nuxt-link :to="{ name: ROUTE_NAMES.BLOG }">-->
+<!--              Blog-->
+<!--            </nuxt-link>-->
+<!--          </li>-->
+<!--          <li class="ui-header__link">-->
+<!--            <nuxt-link :to="{ name: ROUTE_NAMES.FAQ }">-->
+<!--              FAQ-->
+<!--            </nuxt-link>-->
+<!--          </li>-->
+<!--          <li class="ui-header__link">-->
+<!--            <nuxt-link :to="{ name: ROUTE_NAMES.CONTACT_US }">-->
+<!--              Contact Us-->
+<!--            </nuxt-link>-->
+<!--          </li>-->
+        </ul>
+      </nav>
+
+      <nav class="ui-header__buttons">
+          <!-- DEBT: Добавить вызов компонента поиска -->
+          <button type="button">
+            <ui-icon name="search-normal" />
+          </button>
+
+          <!-- DEBT: Добавить вызов компонента корзины -->
+          <button type="button">
+            <ui-icon name="bag" />
+          </button>
+
+          <!-- DEBT: Добавить вызов компонента dropdown -->
+          <button type="button">
+            <ui-icon name="profile" />
+          </button>
+      </nav>
+    </div>
+  </header>
+</template>
+<script setup lang="ts">
+import {UiIcon} from "#shared/ui";
+import {ROUTE_NAMES} from "#shared/constants";
+</script>
+
+<style lang="scss" scoped>
+.ui-header {
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background:
+      linear-gradient(
+        147.38deg,
+        var(--color-primary-30) 60.98%,
+        var(--color-primary-70) 81.93%,
+        var(--color-primary-30) 99.45%),
+        linear-gradient(0deg, var(--color-white), var(--color-white)
+      );
+  }
+
+  .ui-icon--logo {
+    width: 56px;
+    height: 63px;
+  }
+
+  &__inner {
+    padding: 18px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__logo {
+    &::before {
+      display: none;
+    }
+  }
+
+  &__links {
+    display: flex;
+    align-items: center;
+    column-gap: 48px;
+  }
+
+  &__link {
+    a {
+      font-size: var(--font-size-body-md);
+      font-weight: 300;
+      padding: 8px;
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-bottom: 1px solid transparent;
+        border-image: linear-gradient(
+            147.38deg,
+            var(--color-primary-30) 0,
+            var(--color-primary-70) 50.93%,
+            var(--color-primary-30) 100%,
+        );
+        border-image-slice: 1;
+        width: 0;
+        transition: width var(--animation-time) linear;
+      }
+
+      &:hover {
+        &::before {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+
+    button {
+      padding: 8px;
+    }
+
+    .ui-icon {
+      font-size: var(--font-size--icon-md);
+    }
+  }
+}
+</style>
