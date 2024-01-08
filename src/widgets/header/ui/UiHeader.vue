@@ -1,5 +1,6 @@
 <template>
   <header class="ui-header">
+    <!--  DEBT: Добавить прилипающий header  -->
     <div class="ui-header__inner container">
       <nuxt-link class="ui-header__logo" :to="{ name: ROUTE_NAMES.MAIN }">
         <ui-icon name="logo" />
@@ -17,6 +18,7 @@
               Products
             </nuxt-link>
           </li>
+<!--  DEBT: Ссылки скрыты из-за того, что данных страниц нет | START-->
 <!--          <li class="ui-header__link">-->
 <!--            <nuxt-link :to="{ name: ROUTE_NAMES.BLOG }">-->
 <!--              Blog-->
@@ -32,6 +34,7 @@
 <!--              Contact Us-->
 <!--            </nuxt-link>-->
 <!--          </li>-->
+<!--  DEBT: Ссылки скрыты из-за того, что данных страниц нет | END-->
         </ul>
       </nav>
 
