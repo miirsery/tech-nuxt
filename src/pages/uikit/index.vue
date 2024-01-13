@@ -246,6 +246,8 @@
         </ui-button>
 
         <change-full-name v-model="isDialogVisible" />
+
+        <ui-checkbox v-model="isChecked" label="Keep me logged in " />
       </div>
     </div>
 
@@ -272,7 +274,7 @@
 <script lang="ts" setup>
 import {useHead} from "#imports";
 import {ref} from "vue";
-import {UiButton, UiDialog, UiIcon, UiInput, UiProductCharacteristics, UiTabPane, UiTabs} from "#shared/ui";
+import {UiButton, UiCheckbox, UiDialog, UiIcon, UiInput, UiProductCharacteristics, UiTabPane, UiTabs} from "#shared/ui";
 import UiFormItem from "#shared/ui/form/form-item/ui/FormItem.vue";
 import {ChangeFullName} from "#features/profile";
 
@@ -283,6 +285,7 @@ useHead({
 const value = ref('')
 const activeTab = ref('first')
 const isDialogVisible = ref(false)
+const isChecked = ref(false)
 
 const characteristics = [
   {
