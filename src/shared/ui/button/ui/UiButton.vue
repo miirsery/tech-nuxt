@@ -65,6 +65,7 @@ const classes = computed(() => {
 			'ui-button--suffix': slots.suffix,
 			'ui-button--loading': props.loading,
 			'ui-button--only-icon': props.onlyIcon,
+			'ui-button--only-text': props.appearance === 'text',
 		},
 	]
 })
@@ -110,6 +111,8 @@ defineExpose({
 	&__content {
 		font-weight: 400;
     font-size: var(--ui-button--font-size);
+    display: flex;
+    align-items: center;
 	}
 
 	&__prefix {

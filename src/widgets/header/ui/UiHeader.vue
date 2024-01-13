@@ -39,20 +39,20 @@
       </nav>
 
       <nav class="ui-header__buttons">
-          <!-- DEBT: Добавить вызов компонента поиска -->
-          <button type="button">
-            <ui-icon name="search-normal" />
-          </button>
+        <!-- DEBT: Добавить вызов компонента поиска -->
+        <button type="button">
+          <ui-icon name="search-normal" />
+        </button>
 
-          <!-- DEBT: Добавить вызов компонента корзины -->
-          <button type="button">
-            <ui-icon name="bag" />
-          </button>
+        <!-- DEBT: Добавить вызов компонента корзины -->
+        <button type="button">
+          <ui-icon name="bag" />
+        </button>
 
-          <!-- DEBT: Добавить вызов компонента dropdown -->
-          <button type="button">
-            <ui-icon name="profile" />
-          </button>
+        <!-- DEBT: Добавить вызов компонента dropdown -->
+        <button type="button" @click="emits('open-auth')">
+          <ui-icon name="profile" />
+        </button>
       </nav>
     </div>
   </header>
@@ -60,6 +60,12 @@
 <script setup lang="ts">
 import {UiIcon} from "#shared/ui";
 import {ROUTE_NAMES} from "#shared/constants";
+
+type Emits = {
+  (event: 'open-auth'): void
+}
+
+const emits = defineEmits<Emits>()
 </script>
 
 <style lang="scss" scoped>

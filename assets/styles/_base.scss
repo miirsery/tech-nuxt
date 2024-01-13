@@ -73,7 +73,8 @@ h6,
 .h4,
 .h5,
 .h6 {
-  font-weight: 600;
+  font-weight: 500;
+  line-height: normal;
 }
 
 h1,
@@ -168,4 +169,8 @@ a {
   padding: 0 var(--container-padding);
   margin-right: auto;
   margin-left: auto;
+}
+
+.w-100 {
+  width: 100%;
 }

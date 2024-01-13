@@ -54,13 +54,14 @@ const slots = defineSlots<Slots>()
 
 const uiDialogRef = ref<HTMLDivElement | null>(null)
 
+const isHeaderVisible = computed(() => {
+  return props?.title || slots.footer || props.showClose
+})
 const uiDialogClasses = computed(() => {
   return [
     'ui-dialog-content',
+    { 'with-header': isHeaderVisible.value }
   ]
-})
-const isHeaderVisible = computed(() => {
-  return props?.title || slots.footer || props.showClose
 })
 </script>
 
@@ -74,6 +75,8 @@ const isHeaderVisible = computed(() => {
   overflow-y: auto;
   border-radius: 8px;
   position: relative;
+
+  $root: &;
 
   &__header {
     display: flex;
@@ -93,8 +96,13 @@ const isHeaderVisible = computed(() => {
   }
 
   &__body {
-    margin-top: 46px;
     width: 100%;
+  }
+
+  &.with-header {
+    #{$root}__body {
+      margin-top: 46px;
+    }
   }
 }
 </style>

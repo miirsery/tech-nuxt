@@ -35,10 +35,9 @@
 </template>
 
 <script lang="ts" setup>
-// DEBT: Типизировать
+// DEBT: Улучшить анимацию появления. Разнообразить список анимаций.
 import DialogContent from "#shared/ui/dialog/dialog-content/ui/DialogContent.vue";
 
-// DEBT: Типизировать
 type Props = {
   appendTo?: string | HTMLElement
   appendToBody?: boolean
@@ -46,13 +45,15 @@ type Props = {
   title?: string
   showClose?: boolean
   class?: string
+  fullScreen?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  appendToBody: false,
   zIndex: 100,
-  showClose: false,
   appendTo: 'body',
+  appendToBody: false,
+  showClose: false,
+  fullScreen: false,
 })
 
 const modelValue = defineModel<boolean>()

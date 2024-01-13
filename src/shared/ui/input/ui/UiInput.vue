@@ -14,15 +14,17 @@
 
       <div class="ui-input__wrapper" @click="handleFocus" @blurin="handleBlur" tabindex="-1">
         <div v-if="isPrefixVisible" class="ui-input__prefix">
-          <slot v-if="!isPasswordType" name="prefix" />
+          <!-- DEBT: Улучшить логику. Необходимо создать пул значений. -->
+          <ui-icon v-if="isPasswordType || isEmailType" :name="isPasswordType ? 'key' : 'email'" />
 
-          <ui-icon v-else name="key" />
+          <slot v-else name="prefix" />
         </div>
 
         <input
           ref="inputInnerRef"
           v-model="modelValue"
           :type="inputType"
+          :inputmode="props.inputmode"
           :autocomplete="props.autocomplete"
           :disabled="props.disabled"
           :readonly="props.readonly"
@@ -96,7 +98,8 @@ type ModelValue = string | number | null
 
 type Props = {
   label?: string
-  type?: 'text' | 'password' | 'textarea' | 'number'
+  type?: 'text' | 'password' | 'textarea' | 'number' | 'email' | 'tel'
+  inputmode?: 'text' | 'decimal' | 'numeric' | 'tel' | 'search' | 'email' | 'url'
   clearable?: boolean
   disabled?: boolean
   autocomplete?: string
@@ -134,12 +137,13 @@ type UiInputExposeType = {
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  rows: 2,
+  class: '',
   type: 'text',
   autocomplete: 'new-password',
-  class: '',
+  inputmode: 'text',
   clearable: false,
   disabled: false,
-  rows: 2,
   autosize: false,
   readonly: false,
   resize: true,
@@ -159,8 +163,9 @@ const isPasswordHidden = ref(true)
 
 const _ref = computed<HTMLInputElement | HTMLTextAreaElement | null>(() => inputInnerRef.value || textareaInnerRef.value)
 const isPasswordType = computed(() => props.type === 'password')
+const isEmailType = computed(() => props.type === 'email')
 const isSuffixVisible = computed(() => slots.suffix || props.clearable || isPasswordType.value)
-const isPrefixVisible = computed(() => slots.prefix || isPasswordType.value)
+const isPrefixVisible = computed(() => slots.prefix || isPasswordType.value || isEmailType.value)
 const inputType = computed<Props['type']>(() => {
   if (isPasswordType.value && isPasswordHidden.value) return 'password'
   if (isPasswordType.value && !isPasswordHidden.value) return 'text'
