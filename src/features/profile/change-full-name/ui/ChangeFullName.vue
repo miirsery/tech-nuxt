@@ -47,10 +47,3 @@ const handleFormSubmit = async () => {
   }
 }
 </style>
-
-<style lang="scss">
-.ui-dialog-content {
-  padding: 24px;
-  width: 344px;
-}
-</style>

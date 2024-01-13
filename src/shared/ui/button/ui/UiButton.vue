@@ -110,6 +110,8 @@ defineExpose({
 	&__content {
 		font-weight: 400;
     font-size: var(--ui-button--font-size);
+    display: flex;
+    align-items: center;
 	}
 
 	&__prefix {

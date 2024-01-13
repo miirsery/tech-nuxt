@@ -1,5 +1,5 @@
 <template>
-  <div class="ui-tabs">
+  <div :class="['ui-tabs', props.class]">
     <div v-if="slots?.default?.()" class="ui-tabs__header">
       <button
         v-for="tabSlot in slots.default?.()"
@@ -13,7 +13,7 @@
         type="button"
         @click="handleTabSelect(tabSlot.props.name)"
       >
-        {{ tabSlot.props.name }}
+        {{ tabSlot.props.label }}
       </button>
     </div>
 
@@ -29,6 +29,7 @@ import {computed, provide, ref, useSlots} from "vue";
 
 type Props = {
   modelValue: string
+  class?: string
 }
 
 type Emits = {
@@ -73,6 +74,9 @@ defineOptions({
 .ui-tabs {
   &__header {
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     &::after {
       content: '';
@@ -93,6 +97,7 @@ defineOptions({
     padding: 8px 12px;
     color: var(--color-grey-71);
     transition: color var(--animation-time) linear;
+    width: 100%;
 
     &:not(:last-child) {
       margin-right: 24px;
@@ -113,10 +118,6 @@ defineOptions({
         background-color: var(--color-primary);
       }
     }
-  }
-
-  &__content {
-    margin-top: 12px;
   }
 }
 </style>

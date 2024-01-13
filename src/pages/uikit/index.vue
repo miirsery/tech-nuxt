@@ -275,7 +275,7 @@
 import {useHead} from "#imports";
 import {ref} from "vue";
 import {UiButton, UiCheckbox, UiDialog, UiIcon, UiInput, UiProductCharacteristics, UiTabPane, UiTabs} from "#shared/ui";
-import UiFormItem from "#shared/ui/form/form-item/ui/FormItem.vue";
+import UiFormItem from "../../shared/ui/form/form-item/ui/UiFormItem.vue";
 import {ChangeFullName} from "#features/profile";
 
 useHead({
