@@ -5,3 +5,5 @@ export { default as UiButton } from "./button";
 export { default as UiIcon } from "./icon";
 export { default as UiDialog } from './dialog'
 export { default as UiProductCharacteristics } from './product-characteristics'
+export { default as UiTabs } from '#shared/ui/tabs/tabs/ui/UiTabs.vue'
+export { default as UiTabPane } from '#shared/ui/tabs/tab-pane/ui/UiTabPane.vue'

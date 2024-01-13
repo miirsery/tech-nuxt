@@ -249,8 +249,22 @@
       </div>
     </div>
 
-    <div class="box">
-      <ui-product-characteristics :characteristics="characteristics" />
+    <div class="d-flex" :style="{gap: '20px'}">
+      <div class="box" :style="{ minWidth: '300px' }">
+        <ui-product-characteristics :characteristics="characteristics" />
+      </div>
+
+      <div class="box">
+        <ui-tabs v-model="activeTab">
+          <ui-tab-pane name="first">
+            Content 1
+          </ui-tab-pane>
+
+          <ui-tab-pane name="second">
+            Content 2
+          </ui-tab-pane>
+        </ui-tabs>
+      </div>
     </div>
 	</div>
 </template>
@@ -258,7 +272,7 @@
 <script lang="ts" setup>
 import {useHead} from "#imports";
 import {ref} from "vue";
-import {UiButton, UiDialog, UiIcon, UiInput, UiProductCharacteristics} from "#shared/ui";
+import {UiButton, UiDialog, UiIcon, UiInput, UiProductCharacteristics, UiTabPane, UiTabs} from "#shared/ui";
 import UiFormItem from "#shared/ui/form/form-item/ui/FormItem.vue";
 import {ChangeFullName} from "#features/profile";
 
@@ -267,6 +281,7 @@ useHead({
 })
 
 const value = ref('')
+const activeTab = ref('first')
 const isDialogVisible = ref(false)
 
 const characteristics = [

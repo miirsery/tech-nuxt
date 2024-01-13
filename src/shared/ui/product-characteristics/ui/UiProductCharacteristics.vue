@@ -14,7 +14,7 @@
 import type {CommonTypes} from "#shared/types";
 
 type Props = {
-  titlePosition: 'top' | 'bottom'
+  titlePosition?: 'top' | 'bottom'
   characteristics: Array<CommonTypes.CharacteristicType>
 }
 
