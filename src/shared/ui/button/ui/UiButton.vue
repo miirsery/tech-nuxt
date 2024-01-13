@@ -65,7 +65,6 @@ const classes = computed(() => {
 			'ui-button--suffix': slots.suffix,
 			'ui-button--loading': props.loading,
 			'ui-button--only-icon': props.onlyIcon,
-			'ui-button--only-text': props.appearance === 'text',
 		},
 	]
 })

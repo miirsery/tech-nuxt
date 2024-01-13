@@ -26,7 +26,6 @@
 <script setup lang="ts">
 // DEBT: Типизировать, вынести в композабл.
 import {computed, provide, ref, useSlots} from "vue";
-import DialogContent from "#shared/ui/dialog/dialog-content/ui/DialogContent.vue";
 
 type Props = {
   modelValue: string
