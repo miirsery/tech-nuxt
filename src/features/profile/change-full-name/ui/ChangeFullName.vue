@@ -21,7 +21,10 @@
 import {UiButton, UiDialog, UiForm, UiFormItem, UiInput} from "#shared/ui";
 import {reactive} from "vue";
 
-const modelValue = defineModel<boolean>()
+const modelValue = defineModel('modelValue', {
+  type: Boolean,
+  required: true
+})
 
 const formData = reactive({
   firstName: '',

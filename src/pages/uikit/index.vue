@@ -241,13 +241,29 @@
       </div>
 
       <div class="box">
-        <ui-button @click="isDialogVisible = !isDialogVisible">
-          Открыть диалог
-        </ui-button>
+        <div class="column">
+          <ui-button @click="isDialogVisible = !isDialogVisible">
+            Открыть диалог
+          </ui-button>
 
-        <change-full-name v-model="isDialogVisible" />
+          <change-full-name v-model="isDialogVisible" />
 
-        <ui-checkbox v-model="isChecked" label="Keep me logged in " />
+          <ui-checkbox v-model="isChecked" label="Keep me logged in " />
+
+          <ui-breadcrumbs>
+            <ui-breadcrumbs-item :to="{ name: ROUTE_NAMES.MAIN }">
+              Home
+            </ui-breadcrumbs-item>
+
+            <ui-breadcrumbs-item :to="ROUTE_NAMES.PRODUCTS">
+              Products
+            </ui-breadcrumbs-item>
+
+            <ui-breadcrumbs-item>
+              Headphone
+            </ui-breadcrumbs-item>
+          </ui-breadcrumbs>
+        </div>
       </div>
     </div>
 
@@ -274,9 +290,20 @@
 <script lang="ts" setup>
 import {useHead} from "#imports";
 import {ref} from "vue";
-import {UiButton, UiCheckbox, UiDialog, UiIcon, UiInput, UiProductCharacteristics, UiTabPane, UiTabs} from "#shared/ui";
-import UiFormItem from "../../shared/ui/form/form-item/ui/UiFormItem.vue";
+import {
+  UiBreadcrumbsItem,
+  UiBreadcrumbs,
+  UiButton,
+  UiCheckbox,
+  UiIcon,
+  UiInput,
+  UiProductCharacteristics,
+  UiTabPane,
+  UiTabs,
+  UiFormItem
+} from "#shared/ui";
 import {ChangeFullName} from "#features/profile";
+import {ROUTE_NAMES} from "#shared/constants";
 
 useHead({
   title: 'UIKit'
