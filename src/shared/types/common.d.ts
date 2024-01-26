@@ -3,4 +3,11 @@ export namespace CommonTypes {
     title: string
     value: string
   }
+
+  type BreadcrumbType = {
+    title: string
+    link?: string
+  }
+
+  type BreadcrumbsType = Array<BreadcrumbType>
 }

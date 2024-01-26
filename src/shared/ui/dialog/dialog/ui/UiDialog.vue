@@ -56,7 +56,10 @@ const props = withDefaults(defineProps<Props>(), {
   fullScreen: false,
 })
 
-const modelValue = defineModel<boolean>()
+const modelValue = defineModel('modelValue', {
+  type: Boolean,
+  required: true
+})
 
 const handleClose = () => {
   modelValue.value = false

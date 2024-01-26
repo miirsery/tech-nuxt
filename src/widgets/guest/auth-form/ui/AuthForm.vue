@@ -69,7 +69,7 @@ import {AuthorizationForm} from "#features/guest/authorization-form";
 import {RegistrationForm} from "#features/guest/registration-form";
 import {FetchStatus, type FetchStatusDialogType} from "#entities/fetch-status";
 
-const modelValue = defineModel<boolean>('modelValue', {
+const modelValue = defineModel('modelValue', {
   type: Boolean,
   default: false,
 })

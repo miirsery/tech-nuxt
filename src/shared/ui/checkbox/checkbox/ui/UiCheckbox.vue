@@ -30,7 +30,7 @@ type SlotsType = {
 const props = defineProps<Props>()
 const slots = defineSlots<SlotsType>()
 
-const modelValue = defineModel<boolean>('modelValue', {
+const modelValue = defineModel('modelValue', {
   type: Boolean,
   default: false,
 })

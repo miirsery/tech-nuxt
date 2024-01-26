@@ -94,6 +94,7 @@ import { vOnClickOutside } from '@vueuse/components'
 
 // DEBT: Вынести в типы.
 // DEBT: Сделать state = error.
+
 type ModelValue = string | number | null
 
 type Props = {
@@ -151,7 +152,10 @@ const props = withDefaults(defineProps<Props>(), {
 const emits = defineEmits<Emits>()
 const slots = defineSlots<Slots>()
 
-const modelValue = defineModel<ModelValue>()
+const modelValue = defineModel<ModelValue>('modelValue', {
+  type: [String, Number],
+  required: true,
+})
 
 const uiInputRef = shallowRef<HTMLDivElement | null>(null)
 const inputInnerRef = shallowRef<HTMLInputElement | null>(null)
