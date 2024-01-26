@@ -11,17 +11,28 @@
 </template>
 
 <script lang="ts" setup>
-import {type Component, computed, onMounted, ref} from "vue"
-import {useRoute} from "vue-router";
-import {ROUTE_NAMES} from "#shared/constants";
+// DEBT: Исправить Hydration children mismatch on.
+// Доработать пагинацию с tag: button | NuxtLink
+import {type Component, onMounted, ref} from "vue"
+import {NuxtLink} from "#components";
+import {useUiBreadcrumbs} from "#shared/ui/breadcrumbs/model/useUiBreadcrumbs";
 
 type Props = {
   separator?: string | Component
+  tag?: 'button' | typeof NuxtLink
 }
+
+const props = withDefaults(defineProps<Props>(), {
+  tag: NuxtLink,
+})
+
+const { buildProps } = useUiBreadcrumbs()
 
 const breadcrumbsRef = ref<HTMLElement>()
 
 onMounted(() => {
+  buildProps(props)
+
   const items = breadcrumbsRef.value!.querySelectorAll('.ui-breadcrumbs-item')
 
   if (items && items.length) {

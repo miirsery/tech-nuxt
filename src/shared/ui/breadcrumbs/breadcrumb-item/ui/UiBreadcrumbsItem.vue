@@ -1,10 +1,10 @@
 <template>
   <li :class="classes">
-    <nuxt-link v-if="props.to" :to="props.to" class="ui-breadcrumbs-item__link" role="link">
+    <component :is="context.tag" nuxt-link v-if="props.to" :to="props.to" class="ui-breadcrumbs-item__link" role="link">
       <span class="ui-breadcrumbs-item__text">
         <slot />
       </span>
-    </nuxt-link>
+    </component>
 
     <span v-else class="ui-breadcrumbs-item__text">
       <slot />
@@ -20,12 +20,15 @@
 import type {RouteLocationRaw} from "#vue-router";
 import {computed, onMounted, ref} from "vue";
 import {UiIcon} from "#shared/ui";
+import {useUiBreadcrumbs} from "#shared/ui/breadcrumbs/model/useUiBreadcrumbs";
 
 type Props = {
   to?: RouteLocationRaw
 }
 
 const props = defineProps<Props>()
+
+const { context } = useUiBreadcrumbs()
 
 const classes = computed(() => ['ui-breadcrumbs-item', { 'with-link': !!props.to }])
 

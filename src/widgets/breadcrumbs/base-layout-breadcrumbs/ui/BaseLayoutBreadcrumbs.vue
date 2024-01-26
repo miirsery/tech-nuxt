@@ -5,6 +5,7 @@
     </ui-breadcrumbs-item>
   </ui-breadcrumbs>
 </template>
+
 <script setup lang="ts">
 import {UiBreadcrumbs, UiBreadcrumbsItem} from "#shared/ui";
 import {useBreadcrumbs} from "#widgets/breadcrumbs/base-layout-breadcrumbs";
