@@ -1,9 +1,11 @@
 <template>
-  <div class="account">
-    <account-menu />
+  <div class="container">
+    <div class="account">
+      <account-menu />
 
-    <div class="account__page">
-      <slot />
+      <div class="account__page">
+        <slot />
+      </div>
     </div>
   </div>
 </template>

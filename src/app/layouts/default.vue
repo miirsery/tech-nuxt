@@ -4,9 +4,9 @@
 
     <div class="container">
       <base-layout-breadcrumbs />
-
-      <slot />
     </div>
+
+    <slot />
 
     <auth-form v-model="authFormVisible" />
 	</div>
