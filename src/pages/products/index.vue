@@ -5,8 +5,8 @@
 </template>
 
 <script lang="ts" setup>
-import {useBreadcrumbs} from "#widgets/breadcrumbs/base-layout-breadcrumbs";
 import {useSeoMeta} from "#imports";
+import {useBreadcrumbs} from "#widgets/base-layout-breadcrumbs";
 
 const { defineBreadcrumbs } = useBreadcrumbs()
 
