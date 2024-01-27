@@ -53,10 +53,6 @@ defineOptions({
 
 <style lang="scss" scoped>
 .ui-form-item {
-  &__content {
-    margin-top: 8px;
-  }
-
   &__error {
     font-size: var(--font-size-body-xs);
     font-weight: 300;

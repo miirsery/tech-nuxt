@@ -75,6 +75,12 @@ defineOptions({
     }
   }
 
+  a {
+    &::before {
+      display: none;
+    }
+  }
+
   &:not(.with-link) {
     #{$root}__text {
       color: var(--ui-breadcrumbs-item-color-active);
