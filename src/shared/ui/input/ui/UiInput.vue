@@ -26,7 +26,7 @@
           :type="inputType"
           :inputmode="props.inputmode"
           :autocomplete="props.autocomplete"
-          :disabled="props.disabled"
+          :disabled="isDisabled || isNotEditable"
           :readonly="props.readonly"
           :minlength="props.minlength"
           :maxlength="props.maxlength"
@@ -50,8 +50,12 @@
             <ui-icon name="close-circle" />
           </button>
 
-          <button type="button" v-if="isPasswordType" @click="handlePasswordVisibleChange">
+          <button v-if="isPasswordType && !isNotEditable" type="button" @click="handlePasswordVisibleChange">
             <ui-icon :name="passwordIcon" />
+          </button>
+
+          <button v-if="isNotEditable" class="ui-input__edit" type="button" @click="emits('edit')">
+            <ui-icon name="edit" />
           </button>
         </div>
       </div>
@@ -67,7 +71,7 @@
         ref="textareaInnerRef"
         :autocomplete="props.autocomplete"
         :placeholder="props.label"
-        :disabled="props.disabled"
+        :disabled="isDisabled || isNotEditable"
         :readonly="props.readonly"
         @input="handleInput"
         @change="handleChange"
@@ -87,9 +91,8 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, onMounted, onUnmounted, type Ref, ref, shallowRef, watch} from "vue";
+import {computed, type Ref, ref, shallowRef} from "vue";
 import {UiIcon} from "#shared/ui";
-import type {NonNegativeIntegerType} from "#shared/types/helpers";
 import { vOnClickOutside } from '@vueuse/components'
 
 // DEBT: Вынести в типы.
@@ -111,6 +114,7 @@ type Props = {
   minlength?: number
   maxlength?: number
   resize?: boolean
+  editable?: boolean
 }
 
 type Emits = {
@@ -120,6 +124,7 @@ type Emits = {
   (event: 'clear'): void
   (event: 'focus'): void
   (event: 'blur'): void
+  (event: 'edit'): void
 }
 
 type Slots = {
@@ -147,6 +152,7 @@ const props = withDefaults(defineProps<Props>(), {
   disabled: false,
   autosize: false,
   readonly: false,
+  editable: true,
   resize: true,
 })
 const emits = defineEmits<Emits>()
@@ -168,7 +174,9 @@ const isPasswordHidden = ref(true)
 const _ref = computed<HTMLInputElement | HTMLTextAreaElement | null>(() => inputInnerRef.value || textareaInnerRef.value)
 const isPasswordType = computed(() => props.type === 'password')
 const isEmailType = computed(() => props.type === 'email')
-const isSuffixVisible = computed(() => slots.suffix || props.clearable || isPasswordType.value)
+const isNotEditable = computed(() => !props.editable)
+const isDisabled = computed(() => props.disabled)
+const isSuffixVisible = computed(() => slots.suffix || props.clearable  || isNotEditable.value || isPasswordType.value)
 const isPrefixVisible = computed(() => slots.prefix || isPasswordType.value || isEmailType.value)
 const inputType = computed<Props['type']>(() => {
   if (isPasswordType.value && isPasswordHidden.value) return 'password'
@@ -178,12 +186,13 @@ const inputType = computed<Props['type']>(() => {
 })
 const uiInputClasses = computed(() => [
   'ui-input',
+  { 'ui-input--type-textarea': props.type === 'textarea' },
   { 'ui-input--focus': isInFocus.value || modelValue.value?.toString().length },
-  { 'ui-input--disabled': props.disabled },
+  { 'ui-input--disabled': isDisabled.value },
   { 'ui-input--hovered': isHovered.value },
   { 'ui-input--with-prefix': isPrefixVisible.value },
+  { 'ui-input--not-editable': isNotEditable.value },
   { 'ui-input--not-resize': !props.resize },
-  { 'ui-input--type-textarea': props.type === 'textarea' },
   props.class,
 ])
 
@@ -194,13 +203,15 @@ const handlePasswordVisibleChange = () => {
 }
 
 const handleInput = (event: Event) => {
+  if (isNotEditable.value) return
+
   const { value } = event.target as TargetElement
 
   emits('input', value as ModelValue)
 }
 
 const handleChange = (event: Event) => {
-  emits('change', (event.target as TargetElement).value as ModelValue)
+  emits('change', event.currentTarget as ModelValue)
 }
 
 const handleKeydown = (event: KeyboardEvent) => {
@@ -208,7 +219,7 @@ const handleKeydown = (event: KeyboardEvent) => {
 }
 
 const handleFocus = () => {
-  if (!_ref.value || props.disabled) return
+  if (!_ref.value || isDisabled.value || isNotEditable.value) return
 
   _ref.value.focus()
   isInFocus.value = true
@@ -217,7 +228,7 @@ const handleFocus = () => {
 }
 
 const handleBlur = () => {
-  if (!_ref.value || props.disabled) return
+  if (!_ref.value || isDisabled.value || isNotEditable.value) return
 
   _ref.value.blur()
   isInFocus.value = false
@@ -226,7 +237,7 @@ const handleBlur = () => {
 }
 
 const handleClear = () => {
-  if (!_ref.value || props.disabled) return
+  if (!_ref.value || isDisabled.value || isNotEditable.value) return
 
   modelValue.value = ''
   isInFocus.value = true
@@ -258,6 +269,8 @@ defineExpose<UiInputExposeType>({
 </script>
 
 <style lang="scss" scoped>
+// DEBT: Вынести цвета в отдельный :root микролибы.
+// DEBT: В password вместо кружков сделать звездочки.
 .ui-input {
   $root: &;
   --ui-input-border-radius: 8px;
@@ -280,8 +293,7 @@ defineExpose<UiInputExposeType>({
   border-width: 1px;
   border-style: solid;
   border-radius: var(--ui-input-border-radius);
-  transition: all var(--animation-time) ease,
-              color var(--animation-time) ease;
+  transition: color var(--animation-time) linear;
   font-size: var(--font-size-body-md);
   line-height: var(--line-height--body-xs);
   position: relative;
@@ -303,6 +315,7 @@ defineExpose<UiInputExposeType>({
     flex-grow: 1;
     -webkit-appearance: none;
     grid-area: main;
+    text-overflow: ellipsis;
   }
 
   &__inner,
@@ -398,6 +411,12 @@ defineExpose<UiInputExposeType>({
     padding-right: 4px;
   }
 
+  &__edit {
+    .ui-icon {
+      color: var(--color-primary);
+    }
+  }
+
   &--disabled {
     color: var(--ui-input-disabled-text-color);
     border-color: var(--ui-input-disabled-border-color);
@@ -434,6 +453,51 @@ defineExpose<UiInputExposeType>({
   &--not-resize {
     #{$root}__textarea-inner {
       resize: none;
+    }
+  }
+
+  &--not-editable {
+    --ui-input-padding-vertical: 24px;
+
+    color: var(--color-grey-71);
+    box-shadow: none;
+    border-color: transparent;
+
+    #{$root} {
+      &__prefix {
+        :deep(.ui-icon) {
+          color: var(--color-grey-44);
+        }
+      }
+
+      &__label {
+        background-color: transparent;
+        padding: 0;
+        box-shadow: none;
+        top: 24px;
+      }
+
+      &__wrapper {
+        cursor: default;
+        background-color: var(--color-grey-f9);
+        border-radius: 8px;
+      }
+
+      &__inner {
+        color: var(--ui-input-hover-border-color);
+        font-size: var(--font-size-body-md);
+        cursor: default;
+        background-color: var(--color-grey-f9);
+      }
+    }
+
+    &#{$root}--focus {
+      #{$root} {
+        &__label {
+          left: 20px;
+          top: -12px;
+        }
+      }
     }
   }
 

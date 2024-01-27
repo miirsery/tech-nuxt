@@ -60,7 +60,8 @@ const isHeaderVisible = computed(() => {
 const uiDialogClasses = computed(() => {
   return [
     'ui-dialog-content',
-    { 'with-header': isHeaderVisible.value }
+    { 'with-header': isHeaderVisible.value },
+    props.class
   ]
 })
 </script>
@@ -100,9 +101,7 @@ const uiDialogClasses = computed(() => {
   }
 
   &.with-header {
-    #{$root}__body {
-      margin-top: 46px;
-    }
+    padding: 24px;
   }
 }
 </style>
