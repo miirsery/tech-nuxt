@@ -112,11 +112,18 @@ defineExpose({
     font-size: var(--ui-button--font-size);
     display: flex;
     align-items: center;
+    color: inherit;
+    transition: color var(--animation-time) linear;
 	}
 
 	&__prefix {
 		padding-right: 8px;
 	}
+
+  .ui-icon {
+    color: inherit;
+    transition: color var(--animation-time) linear;
+  }
 
 	&:hover {
 		@include responsive(lg) {

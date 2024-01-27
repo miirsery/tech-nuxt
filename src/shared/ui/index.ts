@@ -10,3 +10,5 @@ export { default as UiTabPane } from '#shared/ui/tabs/tab-pane/ui/UiTabPane.vue'
 export { default as UiCheckbox } from '#shared/ui/checkbox/checkbox/ui/UiCheckbox.vue'
 export { default as UiBreadcrumbs } from '#shared/ui/breadcrumbs/breadcrumbs/ui/UiBreadcrumbs.vue'
 export { default as UiBreadcrumbsItem } from '#shared/ui/breadcrumbs/breadcrumb-item/ui/UiBreadcrumbsItem.vue'
+export { default as UiTable } from '#shared/ui/table/table/ui/UiTable.vue'
+

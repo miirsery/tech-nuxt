@@ -1,5 +1,5 @@
 <template>
-  <aside class="account-menu">
+  <aside v-if="isAccountMenuVisible" class="account-menu">
     <div class="account-menu__user">
       <ui-icon name="profile-circle" />
 
@@ -25,16 +25,18 @@
 <script setup lang="ts">
 import {UiIcon} from "#shared/ui";
 import {useRoute, useRouter} from "vue-router";
-import {ROUTE_NAMES} from "#shared/constants";
+import {ROUTE_NAMES, type RouteNamesAllValuesType, type RouteNamesValueType} from "#shared/constants";
 import {computed} from "vue";
 
 const route = useRoute()
 const router = useRouter()
 
-const ACCOUNT_ROUTE_NAMES = [
+const ACCOUNT_ROUTE_NAMES: RouteNamesAllValuesType = [
   ROUTE_NAMES.ACCOUNT_PERSONAL_DATA,
   ROUTE_NAMES.ACCOUNT_PAYMENT_AND_INSTALMENTS,
-] as const
+]
+
+const BLACK_LIST: RouteNamesAllValuesType = [ROUTE_NAMES.ACCOUNT_PAYMENT_AND_INSTALMENTS_INSTALMENT]
 
 const accountChildrenRoutes = computed(() => {
   return ACCOUNT_ROUTE_NAMES.map((routeName) => {
@@ -49,6 +51,7 @@ const accountChildrenRoutes = computed(() => {
     }
   })
 })
+const isAccountMenuVisible = computed(() => !BLACK_LIST.includes(route.name as RouteNamesValueType))
 </script>
 
 <style lang="scss" scoped>
