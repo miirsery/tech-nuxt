@@ -1,10 +1,6 @@
 <template>
   <div class="ui-table">
     <div class="ui-table__wrapper">
-      <div class="ui-table__hidden">
-        <slot />
-      </div>
-
       <table role="table">
         <thead role="rowgroup">
           <tr role="rowheader">
@@ -15,64 +11,55 @@
         </thead>
 
         <tbody role="rowgroup">
-          <tr v-for="(item, index) in props.data" :key="index">
-            <td v-for="(slot, indexSlot) in defaultSlot" :key="indexSlot">
-              <div v-if="slot?.children" class="cell">
-<!--                {{ slot?.children.body({ data: { image: '123' } }) }}-->
-               <div>{{ render(slot?.children.body, {}) }}</div>
-              </div>
+        <tr v-for="(item, index) in props.data" :key="index">
+<!--          <slot :rowData="item" />-->
 
-              <template v-for="(itemProp, itemIndex) in slot.props" :key="itemIndex">
-                <div class="cell-else">
-                  {{ item[itemProp] }}
-                </div>
+
+          <td v-for="(slot, indexSlot) in defaultSlot" :key="indexSlot">
+            <div class="cell" v-if="slot?.children">
+              <template v-for="(slotItem, slotItemIndex) in slot?.children.default()" :key="slotItemIndex">
+<!--                <component :is="render(slotItem, item)" class="qwe" />-->
+                <slot :data="item" />
               </template>
-            </td>
-          </tr>
+            </div>
+
+            <template v-for="(itemProp, itemIndex) in slot.props" :key="itemIndex">
+              <div class="cell-else">
+                {{ item[itemProp] }}
+              </div>
+            </template>
+          </td>
+        </tr>
         </tbody>
       </table>
     </div>
   </div>
 </template>
 
-<script setup lang="ts" generic="T = unknown">
-import {computed, h, onMounted, shallowRef, useSlots} from "vue";
+<script setup lang="ts">
+import { computed, defineProps, defineSlots, h } from "vue";
 
 type Props = {
-  data: Array<T>
+  data: Array<any>
 }
 
-type Slots = {
-  default?: () => HTMLElement
+type SlotProps = {
+  rowData: any
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  data: () => ([]),
-})
+const props = defineProps<Props>();
 
-const slots = defineSlots<Slots>()
-const defaultSlot = computed(() => slots?.default())
-const defaultSlotProps = computed(() => slots?.default().map((slot) => slot.props))
+const slots = defineSlots<SlotProps>();
 
-const render = (item, data: any) => {
-  const a =  h('div', item(), {
-    props: { link: '123' }
-  })
+const defaultSlot = computed(() => slots?.default?.());
 
-  console.log('a', a)
-  // console.log('item', item()[0])
+const defaultSlotProps = computed(() => {
+  return slots?.default().map((slot) => slot.props);
+});
 
-  return 'div'
+const render = (data: any, props: any) => {
+  return h('div', {...data})
 }
-
-onMounted(() => {
-  console.log(defaultSlot.value)
-  defaultSlot.value?.forEach((item) => {
-
-  })
-
-  console.log(defaultSlotProps.value)
-})
 </script>
 
 <style lang="scss" scoped>
@@ -82,6 +69,7 @@ onMounted(() => {
   }
 }
 </style>
+
 
 <!--<script setup lang="ts" generic="T extends { id: string }">-->
 <!--...-->

@@ -1,7 +1,7 @@
 import {defineComponent, Fragment, h} from "vue";
 
 export default defineComponent({
-  name: 'ElTableColumn',
+  name: 'UiTableColumn',
   props: {
     field: {
       type: String,
@@ -11,37 +11,17 @@ export default defineComponent({
     }
   },
   setup(props, { slots }) {
+    return
   },
   render() {
     try {
-      const renderDefault = this.$slots.body?.({
-        data: {},
-      })
+      const renderDefault = this.$slots.default?.({ data: {} }) // передаем данные строки в шаблон
       const children = []
 
       if (Array.isArray(renderDefault)) {
         for (const childNode of renderDefault) {
           children.push(childNode)
         }
-        // for (const childNode of renderDefault) {
-        //   console.log(childNode)
-        //   if (
-        //     childNode.type?.name === 'ElTableColumn' ||
-        //     childNode.shapeFlag & 2
-        //   ) {
-        //     children.push(childNode)
-        //   } else if (
-        //     childNode.type === Fragment &&
-        //     Array.isArray(childNode.children)
-        //   ) {
-        //     childNode.children.forEach((vnode) => {
-        //       // No rendering when vnode is dynamic slot or text
-        //       if (vnode?.patchFlag !== 1024) {
-        //         children.push(vnode)
-        //       }
-        //     })
-        //   }
-        // }
       }
       console.log(children)
 
@@ -50,4 +30,4 @@ export default defineComponent({
       return h('div', [])
     }
   },
-})
+});
