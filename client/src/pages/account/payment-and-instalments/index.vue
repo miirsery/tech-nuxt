@@ -77,8 +77,8 @@ definePageMeta({
 <style lang="scss" scoped>
 .payment-and-instalments {
   :deep(.ui-form-item) {
-    &:first-child {
-      margin-bottom: 16px;
+    &:not(:first-child) {
+      margin-top: 32px;
     }
 
     .ui-form-item {
