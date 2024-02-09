@@ -1,50 +1,77 @@
 <template>
   <div class="instalment">
-    <ui-table :data="tableData">
-      <ui-table-column field="id" label="ID" width="100" />
-      <ui-table-column field="title" label="Title" width="300" />
-      <ui-table-column field="email" label="Email" />
-      <ui-table-column label="Description">
-        <template #default="scope">
-          <div>
-            {{ scope }}
-            <img src="https://torrent-rose.ru/_ld/161/73699329.jpg" width="40" height="40" />
-          </div>
-        </template>
-      </ui-table-column>
+    <ui-table class="instalment__table">
+      <ui-table-header>
+        <ui-table-row>
+          <ui-table-head>
+            Invoice
+          </ui-table-head>
+          <ui-table-head>Status</ui-table-head>
+          <ui-table-head>Method</ui-table-head>
+          <ui-table-head class="text-right">
+            Amount
+          </ui-table-head>
+        </ui-table-row>
+      </ui-table-header>
+
+      <ui-table-body>
+          <ui-table-row v-for="item in tableData" :key="item.id">
+            <ui-table-cell class="instalment__table-cell">
+              <img :src="item.images[0]" />
+
+              <span>{{ item.id }}</span>
+            </ui-table-cell>
+
+            <ui-table-cell>
+              ${{ item.due_amount }}
+            </ui-table-cell>
+
+            <ui-table-cell>
+              {{ item.due_date }}
+            </ui-table-cell>
+
+            <ui-table-cell>
+              {{ item.actual_amount }}
+            </ui-table-cell>
+
+            <ui-table-cell>
+              {{ item.payment_date }}
+            </ui-table-cell>
+
+            <ui-table-cell>
+              {{ item.status }}
+            </ui-table-cell>
+
+            <ui-table-cell>
+              {{ item.total }}
+            </ui-table-cell>
+          </ui-table-row>
+      </ui-table-body>
     </ui-table>
   </div>
 </template>
 
 <script setup lang="ts">
 import {useBreadcrumbs} from "#widgets/base-layout-breadcrumbs";
-import {UiTable} from "#shared/ui";
 import {ref} from "vue";
 import {definePageMeta, useSeoMeta} from "#imports";
-import UiTableColumn from "#shared/ui/table/table-column/ui/ui-table-column";
-
+import {UiTable, UiTableHeader, UiTableRow, UiTableHead, UiTableBody, UiTableCell } from "#shared/ui";
+import useFetchWrap from "#shared/api/useFetchWrap";
+import {instalmentApi} from "#shared/api";
+import type {InstalmentTypes} from "#shared/types/instalment";
 const { defineBreadcrumbs } = useBreadcrumbs()
 
-const tableData = ref([
-  {
-    id: 1,
-    title: 'Title',
-    email: 'test-email@example.com',
-    image: 'https://www.fonstola.ru/images/201206/fonstola.ru_78573.jpg'
-  },
-  {
-    id: 2,
-    title: 'Title-2',
-    email: 'test-qwe-123email@example.com',
-    image: 'https://www.fonstola.ru/images/201206/fonstola.ru_78573.jpg'
-  },
-  {
-    id: 3,
-    title: 'Title-3',
-    email: 'testl@example.com',
-    image: 'https://www.fonstola.ru/images/201206/fonstola.ru_78573.jpg'
+const tableData = ref<InstalmentTypes.All>([])
+
+const getInstalmentData = async () => {
+  const {data} = await instalmentApi.getAll()
+
+  if (data.value) {
+    tableData.value = data.value.data
   }
-])
+}
+
+await getInstalmentData()
 
 defineBreadcrumbs([
   {
@@ -65,14 +92,23 @@ defineBreadcrumbs([
 ])
 
 useSeoMeta({
-  title: 'Instalment'
+  title: () => 'Instalment'
 })
 
 definePageMeta({
-  title: 'Instalment',
+  title: () => 'Instalment',
 })
 </script>
 
 <style lang="scss" scoped>
-
+.instalment {
+  &__table-cell {
+    img {
+      width: 60px;
+      height: 54px;
+      border-radius: 4px;
+      object-fit: contain;
+    }
+  }
+}
 </style>
