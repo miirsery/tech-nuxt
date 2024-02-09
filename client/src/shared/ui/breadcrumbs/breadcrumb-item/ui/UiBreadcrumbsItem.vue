@@ -84,7 +84,18 @@ defineOptions({
   &:not(.with-link) {
     #{$root}__text {
       color: var(--ui-breadcrumbs-item-color-active);
-      border-bottom: 2px solid var(--ui-breadcrumbs-item-color-active);
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: var(--ui-breadcrumbs-item-color-active);
+      }
     }
   }
 }

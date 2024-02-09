@@ -56,9 +56,8 @@ import {useBreadcrumbs} from "#widgets/base-layout-breadcrumbs";
 import {ref} from "vue";
 import {definePageMeta, useSeoMeta} from "#imports";
 import {UiTable, UiTableHeader, UiTableRow, UiTableHead, UiTableBody, UiTableCell } from "#shared/ui";
-import useFetchWrap from "#shared/api/useFetchWrap";
-import {instalmentApi} from "#shared/api";
-import type {InstalmentTypes} from "#shared/types/instalment";
+import type {InstalmentTypes} from "#entities/instalment/types";
+import {instalmentApi} from "#entities/instalment/api";
 const { defineBreadcrumbs } = useBreadcrumbs()
 
 const tableData = ref<InstalmentTypes.All>([])

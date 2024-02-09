@@ -1,4 +1,4 @@
-import type {InstalmentTypes} from "#shared/types/instalment";
+import type {InstalmentTypes} from "#entities/instalment/types";
 import useFetchWrap from "#shared/api/useFetchWrap";
 
 const getAll = async () => {

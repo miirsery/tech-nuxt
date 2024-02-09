@@ -1,4 +1,4 @@
-import {InstalmentTypes} from "#shared/types/instalment";
+import {InstalmentTypes} from "#entities/instalment/types";
 
 export const INSTALMENT_DUMMY_DATA: InstalmentTypes.All = [
   {
