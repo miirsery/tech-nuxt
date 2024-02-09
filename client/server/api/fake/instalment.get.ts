@@ -1,5 +1,5 @@
 import { defineEventHandler } from "h3";
-import {INSTALMENT_DUMMY_DATA} from "#entities/instalment/dummy";
+import {INSTALMENT_DUMMY_DATA} from "#entities/instalment";
 
 export default defineEventHandler(() => {
   return {
