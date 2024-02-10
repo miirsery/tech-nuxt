@@ -3,10 +3,21 @@
     <!--  DEBT: Добавить прилипающий header  -->
     <div class="container">
       <div class="ui-header__inner">
-        <nuxt-link class="ui-header__logo" :to="{ name: ROUTE_NAMES.MAIN }">
-          <ui-icon name="logo" />
-        </nuxt-link>
+        <client-only>
+          <template #fallback>
+            <ui-skeleton :style="{ width: '56px', height: '63px' }" />
+          </template>
 
+          <ui-tooltip>
+            <nuxt-link class="ui-header__logo" :to="{ name: ROUTE_NAMES.MAIN }">
+              <ui-icon name="logo" />
+            </nuxt-link>
+
+            <template #content>
+              Привет
+            </template>
+          </ui-tooltip>
+        </client-only>
         <nav>
           <ul class="ui-header__links">
             <li class="ui-header__link">
@@ -20,17 +31,17 @@
               </nuxt-link>
             </li>
   <!--  DEBT: Ссылки скрыты из-за того, что данных страниц нет | START-->
-  <!--          <li class="ui-header__link">-->
+  <!--          <li class="tooltip-header__link">-->
   <!--            <nuxt-link :to="{ name: ROUTE_NAMES.BLOG }">-->
   <!--              Blog-->
   <!--            </nuxt-link>-->
   <!--          </li>-->
-  <!--          <li class="ui-header__link">-->
+  <!--          <li class="tooltip-header__link">-->
   <!--            <nuxt-link :to="{ name: ROUTE_NAMES.FAQ }">-->
   <!--              FAQ-->
   <!--            </nuxt-link>-->
   <!--          </li>-->
-  <!--          <li class="ui-header__link">-->
+  <!--          <li class="tooltip-header__link">-->
   <!--            <nuxt-link :to="{ name: ROUTE_NAMES.CONTACT_US }">-->
   <!--              Contact Us-->
   <!--            </nuxt-link>-->
@@ -60,7 +71,7 @@
   </header>
 </template>
 <script setup lang="ts">
-import {UiIcon} from "#shared/ui";
+import {UiIcon, UiSkeleton, UiTooltip} from "#shared/ui";
 import {ROUTE_NAMES} from "#shared/constants";
 
 type Emits = {

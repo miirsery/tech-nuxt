@@ -157,7 +157,7 @@ a {
         var(--color-primary-30) 100%,
     );
     border-image-slice: 1;
-    width: 100% !important; // Перекрывает width в ui-header
+    width: 100% !important; // Перекрывает width в tooltip-header
     transition: width var(--animation-time) linear;
   }
 }
