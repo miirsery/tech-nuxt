@@ -6,7 +6,7 @@
       <span class="ui-checkbox__inner" />
     </span>
 
-    <span class="ui-checkbox__label">
+    <span v-if="hasLabel" class="ui-checkbox__label">
       <slot v-if="slots?.label" name="label" />
 
       <template v-else>
@@ -35,10 +35,13 @@ const modelValue = defineModel('modelValue', {
   default: false,
 })
 
+const hasLabel = computed(() => props?.label || slots?.label)
+
 const uiCheckboxClasses = computed(() => {
   return [
     'ui-checkbox',
-    { 'is-checked': modelValue.value }
+    { 'is-checked': modelValue.value },
+    { 'with-label': hasLabel.value }
   ]
 })
 </script>
@@ -50,11 +53,16 @@ const uiCheckboxClasses = computed(() => {
   --ui-checkbox-border-radius: 8px;
 
   height: var(--ui-checkbox-height);
+  width: var(--ui-checkbox-width);
   display: flex;
   align-items: center;
   cursor: pointer;
 
   $root: &;
+
+  &.with-label {
+    width: auto;
+  }
 
   &__original {
     opacity: 0;
@@ -88,7 +96,7 @@ const uiCheckboxClasses = computed(() => {
     &::after {
       box-sizing: content-box;
       content: "";
-      border: 1px solid transparent;
+      border: 2px solid transparent;
       border-left: 0;
       border-top: 0;
       height: 12px;
@@ -104,11 +112,12 @@ const uiCheckboxClasses = computed(() => {
 
   &.is-checked {
     #{$root}__inner {
-      border-color: var(--color-primary);
+      border: 2px solid var(--color-primary);
+      background-color: var(--color-primary);
 
       &::after {
         transform: rotate(45deg) scaleY(1);
-        border-color: var(--color-primary);
+        border-color: var(--color-white);
       }
     }
 

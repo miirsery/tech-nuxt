@@ -6,7 +6,7 @@ export namespace InstalmentTypes {
     due_date: string
     actual_amount: string | null
     payment_date: string | null
-    status: 'paid' | 'on-schedule'
+    status: 'paid' | 'on-schedule' | 'overdue'
     total: string
   }
 
