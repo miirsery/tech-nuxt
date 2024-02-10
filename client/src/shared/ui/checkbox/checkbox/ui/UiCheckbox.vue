@@ -39,7 +39,7 @@ const hasLabel = computed(() => props?.label || slots?.label)
 
 const uiCheckboxClasses = computed(() => {
   return [
-    'tooltip-checkbox',
+    'ui-checkbox',
     { 'is-checked': modelValue.value },
     { 'with-label': hasLabel.value }
   ]

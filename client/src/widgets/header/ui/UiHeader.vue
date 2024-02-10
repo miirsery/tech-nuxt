@@ -31,17 +31,17 @@
               </nuxt-link>
             </li>
   <!--  DEBT: Ссылки скрыты из-за того, что данных страниц нет | START-->
-  <!--          <li class="tooltip-header__link">-->
+  <!--          <li class="ui-header__link">-->
   <!--            <nuxt-link :to="{ name: ROUTE_NAMES.BLOG }">-->
   <!--              Blog-->
   <!--            </nuxt-link>-->
   <!--          </li>-->
-  <!--          <li class="tooltip-header__link">-->
+  <!--          <li class="ui-header__link">-->
   <!--            <nuxt-link :to="{ name: ROUTE_NAMES.FAQ }">-->
   <!--              FAQ-->
   <!--            </nuxt-link>-->
   <!--          </li>-->
-  <!--          <li class="tooltip-header__link">-->
+  <!--          <li class="ui-header__link">-->
   <!--            <nuxt-link :to="{ name: ROUTE_NAMES.CONTACT_US }">-->
   <!--              Contact Us-->
   <!--            </nuxt-link>-->

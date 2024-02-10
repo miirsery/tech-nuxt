@@ -33,7 +33,7 @@ const breadcrumbsRef = ref<HTMLElement>()
 onMounted(() => {
   buildProps(props)
 
-  const items = breadcrumbsRef.value!.querySelectorAll('.tooltip-breadcrumbs-item')
+  const items = breadcrumbsRef.value!.querySelectorAll('.ui-breadcrumbs-item')
 
   if (items && items.length) {
     items[items.length - 1].setAttribute('aria-current', 'page')

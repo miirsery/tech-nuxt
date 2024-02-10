@@ -59,7 +59,7 @@ const isHeaderVisible = computed(() => {
 })
 const uiDialogClasses = computed(() => {
   return [
-    'tooltip-dialog-content',
+    'ui-dialog-content',
     { 'with-header': isHeaderVisible.value },
     props.class
   ]
