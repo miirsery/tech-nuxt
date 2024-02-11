@@ -25,7 +25,7 @@
 <!--    </ui-tooltip-content>-->
 
     <div
-      v-if="isContentVisible"
+      v-if="true"
       class="ui-tooltip-content"
       ref="contentRef"
       @mouseenter="onMouseEnter"

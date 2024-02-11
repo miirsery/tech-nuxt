@@ -12,3 +12,12 @@
   margin-bottom: 40px;
 }
 </style>
+<script setup lang="ts">
+import {UiBreadcrumbs, UiBreadcrumbsItem} from "#shared/ui";
+import {useBreadcrumbs} from "#widgets/base-layout-breadcrumbs";
+import {useRoute} from "vue-router";
+
+const route = useRoute()
+
+const { breadcrumbs } = useBreadcrumbs()
+</script>

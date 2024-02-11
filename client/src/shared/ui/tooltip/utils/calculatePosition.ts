@@ -10,6 +10,4 @@ export const calculatePosition = (tooltipTriggerRef: Ref<HTMLDivElement | undefi
 
   contentNode.style.bottom = `-${triggerNodeClientRect.height + options.offset[1]}px`
   contentNode.style.zIndex = options.zIndex
-
-  console.log(contentNode)
 }

@@ -1,6 +1,7 @@
 import type { AvailableRouterMethod, NitroFetchOptions, NitroFetchRequest } from 'nitropack'
 import type { AsyncDataOptions } from 'nuxt/dist/app/composables/asyncData';
 import {useAsyncData} from "#imports";
+import {snakeToCamel} from "#shared/lib/utils";
 
 type ErrorType = {
   statusCode: number
@@ -16,29 +17,29 @@ type ResponseType<T> = {
   messages: Array<string>
 }
 
-type FetchWrapOptionsType<T> = {
+type FetchWrapOptionsType<T, U> = {
   url: string
   fetchOptions?: NitroFetchOptions<NitroFetchRequest & AvailableRouterMethod<string>>
-  dataOptions?: AsyncDataOptions<T>
+  dataOptions?: AsyncDataOptions<ResponseType<T>, ResponseType<U>>
 }
 
-export default async <T = unknown>({ url, dataOptions, fetchOptions }: FetchWrapOptionsType<T>) => {
+export default async <T, U = unknown>({ url, dataOptions = {}, fetchOptions = {} }: FetchWrapOptionsType<T, U>) => {
   // const runtimeConfig = useRuntimeConfig()
   const uniqueKey = url
-  //
+
   // const baseUrl =
   //   process.env.NODE_ENV === 'production' || process.server ? runtimeConfig.public.env.NUXT_VUE_APP_BASE_URI : ''
 
-  return useAsyncData<ResponseType<T>, ResponseType<[]>>(
+  return useAsyncData<ResponseType<T>, ErrorType>(
     uniqueKey,
     () =>
-      $fetch<T>(uniqueKey, {
+      $fetch<ResponseType<T>>(uniqueKey, {
         method: 'get',
         responseType: 'json',
         ...fetchOptions,
       }),
     {
-      ...dataOptions,
+      transform: (response): ResponseType<U> => snakeToCamel<ResponseType<T>>(response.data)
     }
   )
 }

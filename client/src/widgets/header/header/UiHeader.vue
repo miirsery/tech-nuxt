@@ -8,7 +8,7 @@
             <ui-skeleton :style="{ width: '56px', height: '63px' }" />
           </template>
 
-          <ui-tooltip @on-hover="onHover" :offset="[0, 25]">
+          <ui-tooltip @on-hover="onHover" :offset="[0, 455]">
             <nuxt-link class="ui-header__logo" :to="{ name: ROUTE_NAMES.MAIN }">
               <ui-icon name="logo" />
             </nuxt-link>

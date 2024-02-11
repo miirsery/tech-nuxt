@@ -1,6 +1,6 @@
 import type {HeaderCatalogTypes} from "#entities/header-catalog/types";
 
-export const HEADER_CATALOG_DUMMY_DATA: HeaderCatalogTypes.All = [
+export const HEADER_CATALOG_DUMMY_DATA: HeaderCatalogTypes.Response = [
   {
     uuid: 'qwerty-12334',
     icon_name: 'mobile',
@@ -60,5 +60,6 @@ export const HEADER_CATALOG_DUMMY_DATA: HeaderCatalogTypes.All = [
     icon_name: 'monitor',
     title: 'Laptops & Computers ',
     slug: 'laptops-and-computers ',
+    sub_categories: []
   }
 ]

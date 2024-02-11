@@ -4,15 +4,11 @@ import {headerCatalogApi, type HeaderCatalogTypes} from "#entities/header-catalo
 const catalogData = ref<HeaderCatalogTypes.All>()
 
 export const useHeaderCatalog = () => {
-  const setCatalogData = async (data: HeaderCatalogTypes.All) => {
-    catalogData.value = data
-  }
-
   const getCatalogData = async () => {
     const { data } = await headerCatalogApi.getAll()
 
     if (data.value) {
-      await setCatalogData(data.value.data)
+      catalogData.value = data.value
     }
   }
 
