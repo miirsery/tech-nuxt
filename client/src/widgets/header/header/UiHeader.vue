@@ -1,5 +1,5 @@
 <template>
-  <header class="ui-header">
+  <header ref="headerRef" class="ui-header">
     <!--  DEBT: Добавить прилипающий header  -->
     <div class="container">
       <div class="ui-header__inner">
@@ -8,13 +8,13 @@
             <ui-skeleton :style="{ width: '56px', height: '63px' }" />
           </template>
 
-          <ui-tooltip>
+          <ui-tooltip @on-hover="onHover" :offset="[0, 25]">
             <nuxt-link class="ui-header__logo" :to="{ name: ROUTE_NAMES.MAIN }">
               <ui-icon name="logo" />
             </nuxt-link>
 
             <template #content>
-              Привет
+              <header-catalog />
             </template>
           </ui-tooltip>
         </client-only>
@@ -73,12 +73,22 @@
 <script setup lang="ts">
 import {UiIcon, UiSkeleton, UiTooltip} from "#shared/ui";
 import {ROUTE_NAMES} from "#shared/constants";
+import HeaderCatalog from "#widgets/header/header-catalog/ui/HeaderCatalog.vue";
+import {ref, watch} from "vue";
+import {darkening} from "#widgets/header/utils/darkening";
 
 type Emits = {
   (event: 'open-auth'): void
 }
 
 const emits = defineEmits<Emits>()
+
+const headerRef = ref<HTMLDivElement>()
+const isHovering = ref(false)
+
+const onHover = (value: boolean) => {
+  darkening(value, headerRef)
+}
 </script>
 
 <style lang="scss" scoped>

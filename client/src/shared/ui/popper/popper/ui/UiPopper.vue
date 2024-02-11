@@ -1,6 +1,8 @@
 <template>
   <client-only>
-    <slot />
+    <div class="ui-popper">
+      <slot />
+    </div>
   </client-only>
 </template>
 
@@ -49,5 +51,7 @@ defineOptions({
 </script>
 
 <style lang="scss" scoped>
-
+.ui-popper {
+  position: relative;
+}
 </style>

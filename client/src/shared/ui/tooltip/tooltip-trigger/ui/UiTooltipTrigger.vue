@@ -1,11 +1,12 @@
 <template>
-  <ui-popper-trigger>
+  <ui-popper-trigger v-on="$attrs">
     <slot />
   </ui-popper-trigger>
 </template>
 
 <script setup lang="ts">
 import {UiPopperTrigger} from "#shared/ui";
+
 
 defineOptions({
   name: 'UiTooltipTrigger',

@@ -11,7 +11,7 @@ import { inject, onBeforeUnmount, watch } from 'vue'
 import {POPPER_CONTENT_INJECTION_KEY} from "#shared/ui/popper/constants";
 
 type Props = {
-  offset: [number, number]
+  offset?: [number, number]
 }
 
 const props = withDefaults(defineProps<Props>(), {

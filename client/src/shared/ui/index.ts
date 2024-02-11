@@ -1,5 +1,3 @@
-import UiFocusTrap from "#shared/ui/focus-trap/ui/UiFocusTrap.vue";
-
 export { default as UiForm } from "#shared/ui/form/form/ui/UiForm.vue";
 export { default as UiFormItem } from "#shared/ui/form/form-item/ui/UiFormItem.vue";
 export { default as UiInput } from "#shared/ui/input";

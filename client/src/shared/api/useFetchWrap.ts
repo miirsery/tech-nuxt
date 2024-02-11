@@ -1,5 +1,6 @@
 import type { AvailableRouterMethod, NitroFetchOptions, NitroFetchRequest } from 'nitropack'
-import {type AsyncDataOptions, useAsyncData} from '#app'
+import type { AsyncDataOptions } from 'nuxt/dist/app/composables/asyncData';
+import {useAsyncData} from "#imports";
 
 type ErrorType = {
   statusCode: number
