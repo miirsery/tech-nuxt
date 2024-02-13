@@ -29,7 +29,7 @@ export const HEADER_CATALOG_DUMMY_DATA: HeaderCatalogTypes.Response = [
             title: 'Power cables',
           },
           {
-            uuid: 'qwerty-1234-1-3',
+            uuid: 'qwerty-1234-1-4',
             image: 'https://sun9-61.userapi.com/impg/_9DLR39Cah4CuLGa3-9VpUh7esi3LAVevvZTZQ/g3eQBiZ-BVs.jpg?size=931x1280&quality=95&sign=371b631529256412aac5f88c8dbccc40&c_uniq_tag=KfQMNSuaFHgv2qm8JXAtAeOnAMrN3mprtcD1T8QiJYU&type=album',
             title: 'Cases & Protection',
           },

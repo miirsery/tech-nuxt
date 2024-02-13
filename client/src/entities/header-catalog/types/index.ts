@@ -14,7 +14,8 @@ export namespace HeaderCatalogTypes {
     children?: Array<ChildrenDetail>
   }
 
-  type ChildrenDetail = {
+  // API: Добавить ссылку на категорию.
+  export type ChildrenDetail = {
     uuid: string
     image: string
     title: string

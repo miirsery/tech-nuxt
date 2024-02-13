@@ -94,11 +94,9 @@ const onMouseEnter = () => {
 
   emits('onHover', isContentVisible.value)
 
-  nextTick(() => {
-    calculatePosition(tooltipTriggerRef, contentRef, {
-      zIndex: props.zIndex,
-      offset: props.offset,
-    })
+  calculatePosition(tooltipTriggerRef, contentRef, {
+    zIndex: props.zIndex,
+    offset: props.offset,
   })
 }
 
