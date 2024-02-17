@@ -2,7 +2,10 @@ type SnakeToCamelCase<S extends string> = S extends `${infer T}_${infer U}`
   ? `${Lowercase<T>}${Capitalize<SnakeToCamelCase<U>>}`
   : Lowercase<S>;
 
-export function snakeToCamel<T extends Record<string, any>>(obj: T): { [K in keyof T as SnakeToCamelCase<K & string>]: T[K] extends Record<string, any> ? ReturnType<typeof snakeToCamel> : T[K] } {
+export function snakeToCamel<
+  T extends Record<string, any>,
+  Output extends Record<string, any> = { [K in keyof T as SnakeToCamelCase<K & string>]: T[K] extends Record<string, any> ? ReturnType<typeof snakeToCamel> : T[K] }
+>(obj: T): Output {
   if (Array.isArray(obj)) {
     return obj.map(item => snakeToCamel(item)) as any;
   }
@@ -19,5 +22,5 @@ export function snakeToCamel<T extends Record<string, any>>(obj: T): { [K in key
     return newObj;
   }
 
-  return obj;
+  return obj as Output;
 }

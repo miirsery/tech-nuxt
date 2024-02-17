@@ -3,14 +3,6 @@ import type { AsyncDataOptions } from 'nuxt/dist/app/composables/asyncData';
 import {snakeToCamel} from "#shared/lib/utils";
 import {useAsyncData} from "#app/composables/asyncData";
 
-type ErrorType = {
-  statusCode: number
-  error: {
-    type: string
-    description: string
-  }
-}
-
 type ResponseType<T> = {
   data: T
   errors: Array<Record<string, Array<string>>>
@@ -23,14 +15,21 @@ type FetchWrapOptionsType<T, U> = {
   dataOptions?: AsyncDataOptions<ResponseType<T>, ResponseType<U>>
 }
 
-export default async <T, U = unknown>({ url, dataOptions = {}, fetchOptions = {} }: FetchWrapOptionsType<T, U>) => {
+export default async <
+  T = unknown,
+  U = unknown
+>({
+  url,
+  dataOptions = {},
+  fetchOptions = {}
+}: FetchWrapOptionsType<T, U>) => {
   // const runtimeConfig = useRuntimeConfig()
   const uniqueKey = url
 
   // const baseUrl =
   //   process.env.NODE_ENV === 'production' || process.server ? runtimeConfig.public.env.NUXT_VUE_APP_BASE_URI : ''
 
-  return useAsyncData<ResponseType<T>, ErrorType>(
+  return useAsyncData<ResponseType<T>, ResponseType<T>, ResponseType<U>>(
     uniqueKey,
     () =>
       $fetch<ResponseType<T>>(uniqueKey, {
@@ -39,7 +38,8 @@ export default async <T, U = unknown>({ url, dataOptions = {}, fetchOptions = {}
         ...fetchOptions,
       }),
     {
-      transform: (response): ResponseType<U> => snakeToCamel<ResponseType<T>>(response.data)
+      transform: (response) => snakeToCamel<ResponseType<T>, ResponseType<U>>(response.data as ResponseType<T>),
+      ...(dataOptions ? dataOptions : {})
     }
   )
 }
