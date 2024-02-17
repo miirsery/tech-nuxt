@@ -7,6 +7,7 @@ export { default as UiDialog } from '#shared/ui/dialog'
 export { default as UiProductCharacteristics } from '#shared/ui/product-characteristics'
 export { default as UiCheckbox } from '#shared/ui/checkbox/checkbox/ui/UiCheckbox.vue'
 export { default as UiFocusTrap } from '#shared/ui/focus-trap'
+export { default as UiAutocomplete } from '#shared/ui/autocomplete/ui/UiAutocomplete.vue'
 
 export { default as UiTabs } from '#shared/ui/tabs/tabs/ui/UiTabs.vue'
 export { default as UiTabPane } from '#shared/ui/tabs/tab-pane/ui/UiTabPane.vue'

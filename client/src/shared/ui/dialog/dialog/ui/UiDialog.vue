@@ -5,15 +5,12 @@
     :disabled="appendTo !== 'body' ? false : !appendToBody"
     >
     <div :class="props.class">
-      <transition
-        name="fade"
-        appear
-      >
+      <transition>
         <div
           v-if="modelValue"
+          :style="{ zIndex: props.zIndex }"
           class="ui-dialog__overlay"
           @click="handleClose"
-          :style="{ zIndex: props.zIndex }"
         >
           <div
             role="dialog"
@@ -35,7 +32,7 @@
 </template>
 
 <script lang="ts" setup>
-// DEBT: Улучшить анимацию появления. Разнообразить список анимаций.
+// DEBT: Разнообразить список анимаций.
 import DialogContent from "#shared/ui/dialog/dialog-content/ui/DialogContent.vue";
 
 type Props = {
@@ -84,13 +81,13 @@ defineOptions({
   }
 }
 
-.fade-enter-active,
-.fade-leave-active {
+.v-enter-active,
+.v-leave-active {
   transition: opacity var(--animation-time) linear;
 }
 
-.fade-enter,
-.fade-leave-to {
+.v-enter-from,
+.v-leave-to {
   opacity: 0;
 }
 </style>

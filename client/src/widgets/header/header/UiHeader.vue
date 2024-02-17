@@ -84,7 +84,7 @@ import {ROUTE_NAMES} from "#shared/constants";
 import {ref, watch} from "vue";
 import {darkening} from "#widgets/header/utils/darkening";
 import HeaderCatalog from "#widgets/header/header-catalog/ui/HeaderCatalog.vue";
-import HeaderProfile from "#widgets/header/header/header-profile/ui/HeaderProfile.vue";
+import HeaderProfile from "#widgets/header/header-profile/ui/HeaderProfile.vue";
 
 type Emits = {
   (event: 'open-auth'): void

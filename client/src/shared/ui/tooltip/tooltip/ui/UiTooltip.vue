@@ -25,16 +25,17 @@
 <!--    >-->
 <!--      <slot name="content" />-->
 <!--    </ui-tooltip-content>-->
-
-    <div
-      v-if="isContentVisible"
-      class="ui-tooltip-content"
-      ref="contentRef"
-      @mouseenter="onMouseEnter"
-      @mouseleave="onMouseLeave"
-    >
-      <slot name="content" />
-    </div>
+    <transition >
+      <div
+        v-if="isContentVisible"
+        class="ui-tooltip-content"
+        ref="contentRef"
+        @mouseenter="onMouseEnter"
+        @mouseleave="onMouseLeave"
+      >
+        <slot name="content" />
+      </div>
+    </transition>
 
     <ui-popper-arrow />
   </ui-popper>
@@ -168,5 +169,15 @@ defineOptions({
   border-radius: 4px;
   padding: 12px;
   width: auto;
+}
+
+.v-enter-active,
+.v-leave-active {
+  transition: opacity var(--animation-time) linear;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
 }
 </style>
