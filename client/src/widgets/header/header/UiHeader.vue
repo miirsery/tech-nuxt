@@ -61,10 +61,18 @@
             <ui-icon name="bag" />
           </button>
 
-          <!-- DEBT: Добавить вызов компонента dropdown -->
-          <button type="button" @click="emits('open-auth')">
+          <button v-if="isAuthorized" type="button" @click="emits('open-auth')">
             <ui-icon name="profile" />
           </button>
+
+
+          <ui-tooltip v-else @on-hover="onHover" :offset="[-313, 299]">
+            <ui-icon name="profile" />
+
+            <template #content>
+              <header-profile />
+            </template>
+          </ui-tooltip>
         </nav>
       </div>
     </div>
@@ -73,9 +81,10 @@
 <script setup lang="ts">
 import {UiIcon, UiSkeleton, UiTooltip} from "#shared/ui";
 import {ROUTE_NAMES} from "#shared/constants";
-import HeaderCatalog from "#widgets/header/header-catalog/ui/HeaderCatalog.vue";
 import {ref, watch} from "vue";
 import {darkening} from "#widgets/header/utils/darkening";
+import HeaderCatalog from "#widgets/header/header-catalog/ui/HeaderCatalog.vue";
+import HeaderProfile from "#widgets/header/header/header-profile/ui/HeaderProfile.vue";
 
 type Emits = {
   (event: 'open-auth'): void
@@ -84,7 +93,7 @@ type Emits = {
 const emits = defineEmits<Emits>()
 
 const headerRef = ref<HTMLDivElement>()
-const isHovering = ref(false)
+const isAuthorized = ref(false)
 
 const onHover = (value: boolean) => {
   darkening(value, headerRef)
@@ -137,6 +146,29 @@ const onHover = (value: boolean) => {
   }
 
   &__link {
+    :deep(.router-link-active) {
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 1px;
+        border-bottom: 1px solid transparent;
+        border-image: linear-gradient(
+            147.38deg,
+            var(--color-primary-30) 0,
+            var(--color-primary-70) 50.93%,
+            var(--color-primary-30) 100%,
+        );
+        border-image-slice: 1;
+        width: 100% !important; // Перекрывает width в ui-header
+        transition: width var(--animation-time) linear;
+      }
+    }
+
     a {
       font-size: var(--font-size-body-md);
       font-weight: 300;
