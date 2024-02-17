@@ -1,17 +1,17 @@
 <template>
   <client-only>
     <ui-dialog v-model="modelValue" append-to-body>
-      <div :class="['fetch-status', `fetch-status--${props.status}`]">
+      <div :class="['fetch-status', `fetch-status--${fetchStatusDialogState.state.status}`]">
         <div class="fetch-status__icon">
-          <ui-icon :name="`${props.status}-status`" />
+          <ui-icon :name="`${fetchStatusDialogState.state.status}-status`" />
         </div>
 
         <h3 class="fetch-status__title">
-          {{ props.text ?? props.status === 'error' ? 'Oops.' : 'Well done' }}
+          {{ fetchStatusDialogState.state.text ?? fetchStatusDialogState.state.status === 'error' ? 'Oops.' : 'Well done' }}
         </h3>
 
         <p class="body-lg fetch-status__description">
-          {{ props.description }}
+          {{ fetchStatusDialogState.state.description }}
         </p>
       </div>
     </ui-dialog>
@@ -19,14 +19,11 @@
 </template>
 <script setup lang="ts">
 import {UiDialog, UiIcon} from "#shared/ui";
+import {inject, type Ref} from "vue";
+import type {FetchStatusDialogType} from "#entities/fetch-status";
 
-type Props = {
-  status?: 'error' | 'success'
-  text?: string
-  description?: string
-}
+const fetchStatusDialogState  =  inject('fetchStatusDialogState') as Ref<FetchStatusDialogType>
 
-const props = defineProps<Props>()
 const modelValue = defineModel('modelValue', {
   type: Boolean,
   default: false,

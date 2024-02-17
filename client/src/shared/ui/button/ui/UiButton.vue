@@ -25,7 +25,7 @@
 <script lang="ts" setup>
 // DEBT: Добавить типизацию.
 // DEBT: Добавить type="button" дефолтно.
-import {computed, type Ref, ref, useSlots} from "vue";
+import {computed, ref, useSlots} from "vue";
 import type {NuxtLink} from "#components";
 
 type Props = {

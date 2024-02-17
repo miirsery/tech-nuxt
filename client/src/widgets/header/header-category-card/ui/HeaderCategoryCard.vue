@@ -9,7 +9,7 @@
         Image
       </div>
 
-      <p>{{ props.category.title }}</p>
+      <p class="mt-16">{{ props.category.title }}</p>
     </nuxt-link>
   </div>
 </template>
@@ -26,6 +26,15 @@ const props = defineProps<Props>()
 
 <style lang="scss" scoped>
 .header-category-card {
+  padding: 8px;
+  border-radius: 8px;
+  text-align: center;
+  transition: box-shadow var(--animation-time) linear;
+
+  &:hover {
+    box-shadow: $box-shadow-1;
+  }
+
   a {
     &::before {
       display: none;

@@ -8,7 +8,7 @@
             <ui-skeleton :style="{ width: '56px', height: '63px' }" />
           </template>
 
-          <ui-tooltip @on-hover="onHover" :offset="[0, 455]">
+          <ui-tooltip @on-hover="onHover" :offset="[0, 383]">
             <nuxt-link class="ui-header__logo" :to="{ name: ROUTE_NAMES.MAIN }">
               <ui-icon name="logo" />
             </nuxt-link>
@@ -180,6 +180,10 @@ const onHover = (value: boolean) => {
     .ui-icon {
       font-size: var(--font-size--icon-md);
     }
+  }
+
+  :deep(.ui-tooltip-content) {
+    border-radius: 0 0 8px 8px;
   }
 }
 </style>

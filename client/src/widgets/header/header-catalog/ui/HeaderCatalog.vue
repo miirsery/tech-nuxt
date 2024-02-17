@@ -5,7 +5,7 @@
         <div
           v-for="category in catalogData"
           :key="category.uuid"
-          class="header-catalog__category"
+          :class="['header-catalog__category', { active: isCategoryActive(category.uuid) }]"
           @mouseenter="onCategoryEnter(category)"
         >
           <ui-icon :name="category.iconName" />
@@ -17,7 +17,7 @@
       </div>
 
       <div v-if="!emptySubcategory" class="header-catalog__subcategories">
-        <div>
+        <div v-if="activeCategory">
           <div
             v-for="category in activeCategory.subCategories"
             :key="category.uuid"
@@ -56,10 +56,14 @@ import HeaderCategoryCard from "#widgets/header/header-category-card/ui/HeaderCa
 
 const { catalogData } = useHeaderCatalog()
 
-const activeCategory = ref<HeaderCatalogTypes.One | undefined>(catalogData.value?.[0] ?? {})
+const activeCategory = ref<HeaderCatalogTypes.One | undefined>(catalogData.value?.[0])
 const activeSubcategory = ref<HeaderCatalogTypes.One>()
 
 const emptySubcategory = computed(() => !activeCategory.value || (activeCategory.value && !activeCategory.value.subCategories?.length))
+
+const isCategoryActive = (categoryUuid: string) => {
+  return activeCategory.value?.uuid === categoryUuid
+}
 
 const onSubcategoryEnter = (category?: HeaderCatalogTypes.One) => {
   if (activeSubcategory.value) {
@@ -82,6 +86,7 @@ const onCategoryEnter = (category: HeaderCatalogTypes.One) => {
 
   &__categories {
    display: flex;
+    height: 100%;
   }
 
   &__categories-main {
@@ -126,6 +131,7 @@ const onCategoryEnter = (category: HeaderCatalogTypes.One) => {
     display: flex;
     gap: 16px;
     margin-left: 48px;
+    align-items: center;
   }
 }
 </style>

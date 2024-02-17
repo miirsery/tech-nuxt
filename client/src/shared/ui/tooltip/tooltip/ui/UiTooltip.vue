@@ -12,6 +12,8 @@
       class="ui-tooltip-trigger"
       @mouseenter="onMouseEnter"
       @mouseleave="onMouseLeave"
+      @click="handleContentOpen"
+      v-on-click-outside="handleOutsideClick"
     >
       <slot v-if="$slots.default" />
     </div>
@@ -25,7 +27,7 @@
 <!--    </ui-tooltip-content>-->
 
     <div
-      v-if="true"
+      v-if="isContentVisible"
       class="ui-tooltip-content"
       ref="contentRef"
       @mouseenter="onMouseEnter"
@@ -44,6 +46,7 @@ import {nextTick, provide, readonly, ref, toRef} from "vue";
 import {TOOLTIP_INJECTION_KEY} from "#shared/ui/tooltip/constants";
 import {useDelayedToggle, useId} from "#shared/lib/hooks";
 import {calculatePosition} from "#shared/ui/tooltip/utils/calculatePosition";
+import { vOnClickOutside } from '@vueuse/components'
 
 type Props = {
   trigger?: 'hover' | 'click'
@@ -67,6 +70,8 @@ const emits = defineEmits<Emits>()
 const tooltipTriggerRef = ref<HTMLDivElement>()
 const contentRef = ref<HTMLDivElement>()
 
+const timerId = ref<number>()
+
 const isShow = ref(false)
 const isHide = ref(true)
 const isContentVisible = ref(false)
@@ -89,23 +94,52 @@ const { onOpen, onClose } = useDelayedToggle({
 const popperRef = ref()
 const isOpen = ref(false)
 
+const handleContentOpen = () => {
+  isContentVisible.value = true
+
+  nextTick(() => {
+    calculatePosition(tooltipTriggerRef, contentRef, {
+      zIndex: props.zIndex,
+      offset: props.offset,
+    })
+  })
+}
+
+const handleOutsideClick = (event: MouseEvent) => {
+  if (props.trigger === 'hover') return
+
+  const target = event.target as HTMLElement;
+
+  if (!tooltipTriggerRef.value?.contains(target) || !contentRef.value?.contains(target)) {
+    isContentVisible.value = false;
+  }
+}
+
 const onMouseEnter = () => {
+  window.clearTimeout(timerId.value)
+
+  if (props.trigger !== 'hover') return
+
   isContentVisible.value = true
 
   emits('onHover', isContentVisible.value)
 
-  calculatePosition(tooltipTriggerRef, contentRef, {
-    zIndex: props.zIndex,
-    offset: props.offset,
+  nextTick(() => {
+    calculatePosition(tooltipTriggerRef, contentRef, {
+      zIndex: props.zIndex,
+      offset: props.offset,
+    })
   })
 }
 
 const onMouseLeave = () => {
-  setTimeout(() => {
+  if (props.trigger !== 'hover') return
+
+   timerId.value = window.setTimeout(() => {
     isContentVisible.value = false
 
     emits('onHover', isContentVisible.value)
-  }, 300)
+  }, 500)
 }
 
 // @ts-ignore
@@ -134,6 +168,5 @@ defineOptions({
   border-radius: 4px;
   padding: 12px;
   width: auto;
-  border: 1px solid red;
 }
 </style>

@@ -19,7 +19,6 @@ import {UiHeader} from "#widgets/header";
 import {AuthForm} from "#widgets/guest";
 import {ref} from "vue";
 import {BaseLayoutBreadcrumbs} from "#widgets/base-layout-breadcrumbs";
-import {UiBreadcrumbs, UiBreadcrumbsItem} from "#shared/ui";
 import {ROUTE_NAMES, type RouteNamesAllValuesType, type RouteNamesValueType} from "#shared/constants";
 import {computed} from "vue";
 import {useRoute} from "vue-router";

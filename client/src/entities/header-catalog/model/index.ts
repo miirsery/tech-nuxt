@@ -15,6 +15,6 @@ export const useHeaderCatalog = () => {
   return {
     getCatalogData,
 
-    catalogData: readonly(catalogData),
+    catalogData,
   }
 }
