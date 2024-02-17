@@ -39,23 +39,23 @@
             </ui-table-cell>
 
             <ui-table-cell class="instalment__table-due-amount">
-              ${{ item.due_amount }}
+              ${{ item.dueDate }}
             </ui-table-cell>
 
             <ui-table-cell>
-              {{ item.due_date }}
+              {{ item.dueDate }}
             </ui-table-cell>
 
             <ui-table-cell>
-              <span v-if="item.actual_amount">
-                ${{ item.actual_amount }}
+              <span v-if="item.actualAmount">
+                ${{ item.actualAmount }}
               </span>
               <span v-else>-</span>
             </ui-table-cell>
 
             <ui-table-cell>
-              <span v-if="item.payment_date">
-                ${{ item.actual_amount }}
+              <span v-if="item.paymentDate">
+                ${{ item.actualAmount }}
               </span>
               <span v-else>-</span>
             </ui-table-cell>
@@ -125,7 +125,7 @@ const getInstalmentData = async () => {
   const {data} = await instalmentApi.getAll()
 
   if (data.value) {
-    tableData.value = data.value.map((instalment) => {
+    tableData.value = data.value.data.map((instalment) => {
       return {
         ...instalment,
         checked: false,

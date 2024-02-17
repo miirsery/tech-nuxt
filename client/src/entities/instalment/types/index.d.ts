@@ -1,5 +1,5 @@
 export namespace InstalmentTypes {
-  type One = {
+  type ResponseOne = {
     id: string
     images: Array<string>
     due_amount: string
@@ -10,5 +10,18 @@ export namespace InstalmentTypes {
     total: string
   }
 
-  type All = Array<One>
+  type ResponseAll = Array<ResponseOne>
+
+  type One = {
+    id: string
+    images: Array<string>
+    dueAmount: string
+    dueDate: string
+    actualAmount: string | null
+    paymentDate: string | null
+    status: string
+    total: string
+  }
+
+  export type All = Array<One>
 }

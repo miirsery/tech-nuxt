@@ -8,7 +8,7 @@ export const useHeaderCatalog = () => {
     const { data } = await headerCatalogApi.getAll()
 
     if (data.value) {
-      catalogData.value = data.value
+      catalogData.value = data.value.data
     }
   }
 
