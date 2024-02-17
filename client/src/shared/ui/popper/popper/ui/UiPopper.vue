@@ -1,9 +1,7 @@
 <template>
-  <client-only>
-    <div class="ui-popper">
-      <slot />
-    </div>
-  </client-only>
+  <div class="ui-popper">
+    <slot />
+  </div>
 </template>
 
 <script setup lang="ts">/**
