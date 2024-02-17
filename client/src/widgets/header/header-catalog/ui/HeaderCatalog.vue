@@ -49,6 +49,7 @@
 </template>
 
 <script setup lang="ts">
+// DEBT: Перенести tooltip в открытие через hover под products.
 import {type HeaderCatalogTypes, useHeaderCatalog} from "#entities/header-catalog";
 import {UiButton, UiIcon} from "#shared/ui";
 import {computed, ref} from "vue";

@@ -1,9 +1,9 @@
 import { defineEventHandler } from "h3";
-import {HEADER_CATALOG_DUMMY_DATA} from "#entities/header-catalog";
+import {INSTALMENT_DUMMY_DATA} from "#entities/instalment";
 
 export default defineEventHandler(() => {
   return {
-    data: 'test',
+    data: INSTALMENT_DUMMY_DATA,
     errors: [],
     messages: [],
   }
