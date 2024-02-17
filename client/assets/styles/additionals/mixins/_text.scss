@@ -4,9 +4,13 @@
 	@return str-length($string) >= str-length($find) and str-slice($string, (str-length($string) - str-length($find) + 1)) == $find;
 }
 
+@function starts-with($string, $find) {
+  @return str-slice($string, 1, str-length($find)) == $find;
+}
+
 @mixin generate-text-classes($text-sizes) {
   @each $key-size, $value-size in $text-sizes {
-		@if (ends-with($key-size, 'body-') or ends-with($key-size, 'button-') or ends-with($key-size, 'overline-lg')) {
+		@if (starts-with($key-size, 'body-') or starts-with($key-size, 'button-') or starts-with($key-size, 'overline-lg')) {
 			.text-#{$key-size} {
 				font-size: $value-size;
 				font-weight: 300;

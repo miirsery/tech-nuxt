@@ -453,7 +453,6 @@ defineExpose<UiInputExposeType>({
 
   &--with-suffix {
     #{$root}__label {
-      padding-right: 24px;
       white-space: nowrap;
     }
   }

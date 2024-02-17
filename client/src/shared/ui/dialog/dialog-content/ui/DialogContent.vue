@@ -59,7 +59,7 @@ const slots = defineSlots<Slots>()
 const uiDialogRef = ref<HTMLDivElement | null>(null)
 
 const isHeaderVisible = computed(() => {
-  return props?.title || slots.footer || props.showClose
+  return props?.title || slots.footer || props.showClose || slots["header-content"]
 })
 const uiDialogClasses = computed(() => {
   return [

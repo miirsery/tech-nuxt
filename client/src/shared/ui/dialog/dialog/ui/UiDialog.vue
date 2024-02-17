@@ -4,7 +4,7 @@
     :to="appendTo"
     :disabled="appendTo !== 'body' ? false : !appendToBody"
     >
-    <div :class="props.class">
+    <div :class="['ui-dialog', props.class]">
       <transition>
         <div
           v-if="modelValue"
@@ -23,6 +23,10 @@
               @close="handleClose"
             >
               <slot />
+
+              <template v-if="slots?.['header-content']" #header-content>
+                <slot name="header-content" />
+              </template>
             </dialog-content>
           </div>
         </div>
@@ -45,6 +49,11 @@ type Props = {
   fullScreen?: boolean
 }
 
+type Slots = {
+  default?: () => HTMLElement
+  'header-content'?: () => HTMLElement
+}
+
 const props = withDefaults(defineProps<Props>(), {
   zIndex: 100,
   appendTo: 'body',
@@ -52,6 +61,7 @@ const props = withDefaults(defineProps<Props>(), {
   showClose: false,
   fullScreen: false,
 })
+const slots = defineSlots<Slots>()
 
 const modelValue = defineModel('modelValue', {
   type: Boolean,

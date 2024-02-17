@@ -10,7 +10,6 @@ const removeNode = (node: HTMLElement | null) => {
   }
 }
 
-// FIXME: Добавить плавное появление.
 export const darkening = (isHovering = false, headerRef?: Ref<HTMLDivElement | undefined>) => {
   if (process.server || !headerRef?.value) return
 
