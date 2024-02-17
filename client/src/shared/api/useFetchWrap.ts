@@ -1,7 +1,7 @@
 import type { AvailableRouterMethod, NitroFetchOptions, NitroFetchRequest } from 'nitropack'
 import type { AsyncDataOptions } from 'nuxt/dist/app/composables/asyncData';
-import {useAsyncData} from "#imports";
 import {snakeToCamel} from "#shared/lib/utils";
+import {useAsyncData} from "#app/composables/asyncData";
 
 type ErrorType = {
   statusCode: number

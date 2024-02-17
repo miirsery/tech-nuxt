@@ -125,7 +125,7 @@ const getInstalmentData = async () => {
   const {data} = await instalmentApi.getAll()
 
   if (data.value) {
-    tableData.value = data.value.data.map((instalment) => {
+    tableData.value = data.value.map((instalment) => {
       return {
         ...instalment,
         checked: false,
