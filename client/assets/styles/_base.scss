@@ -52,8 +52,16 @@
   font-size: var(--font-size-body-md);
 }
 
+html, body, #__nuxt {
+  height: 100%;
+}
+
+
 html {
   font-family: $font;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: var(--line-height);
   scroll-behavior: smooth;
 }
 

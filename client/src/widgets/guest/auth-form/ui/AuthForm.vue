@@ -56,9 +56,6 @@
   <fetch-status
     v-if="Object.keys(fetchStatusDialogState.state).length"
     v-model="fetchStatusDialogState.visible"
-    :description="fetchStatusDialogState.state.description"
-    :status="fetchStatusDialogState.state.status"
-    :text="fetchStatusDialogState.state.text"
   />
 </template>
 <script setup lang="ts">

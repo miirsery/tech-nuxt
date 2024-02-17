@@ -1,1 +1,1 @@
-export { default as UiHeader } from "#widgets/header/ui/UiHeader.vue";
+export { default as UiHeader } from "#widgets/header/header/UiHeader.vue";

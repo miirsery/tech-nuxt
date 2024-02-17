@@ -18,6 +18,20 @@ export default defineNuxtConfig({
 			enabled: true,
 		},
 	},
+  image: {
+    quality: 80,
+    format: ['webp'],
+    screens: {
+      'xs': 320,
+      'sm': 640,
+      'md': 768,
+      'lg': 1200,
+      'xl': 1440,
+      'xxl': 1536,
+      '2xl': 1536
+    },
+    domains: ['*']
+  },
 	vue: {
 		defineModel: true,
 	},
