@@ -1,6 +1,6 @@
-import type {HeaderCatalogTypes} from "#entities/header-catalog/types";
+import type {ProductCatalogTypes} from "../../product/types";
 
-export const HEADER_CATALOG_DUMMY_DATA: HeaderCatalogTypes.Response = [
+export const HEADER_CATALOG_DUMMY_DATA: ProductCatalogTypes.Response = [
   {
     uuid: 'qwerty-12334',
     icon_name: 'mobile',

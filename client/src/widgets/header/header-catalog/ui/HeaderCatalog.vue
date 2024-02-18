@@ -37,7 +37,7 @@
         </div>
 
         <div v-if="!!activeSubcategory" class="header-catalog__subcategory-previews">
-          <header-category-card v-for="category in activeSubcategory.children" :category="category" :key="category.uuid" />
+          <product-preview-card v-for="category in activeSubcategory.children" :category="category" :key="category.uuid" />
         </div>
       </div>
 
@@ -50,15 +50,15 @@
 
 <script setup lang="ts">
 // DEBT: Перенести tooltip в открытие через hover под products.
-import {type HeaderCatalogTypes, useHeaderCatalog} from "#entities/header-catalog";
+import {useHeaderCatalog} from "#entities/header-catalog";
 import {UiButton, UiIcon} from "#shared/ui";
 import {computed, ref} from "vue";
-import HeaderCategoryCard from "#widgets/header/header-category-card/ui/HeaderCategoryCard.vue";
+import {type ProductCatalogTypes, ProductPreviewCard} from "#entities/product";
 
 const { catalogData } = useHeaderCatalog()
 
-const activeCategory = ref<HeaderCatalogTypes.One | undefined>(catalogData.value?.[0])
-const activeSubcategory = ref<HeaderCatalogTypes.One>()
+const activeCategory = ref<ProductCatalogTypes.One | undefined>(catalogData.value?.[0])
+const activeSubcategory = ref<ProductCatalogTypes.One>()
 
 const emptySubcategory = computed(() => !activeCategory.value || (activeCategory.value && !activeCategory.value.subCategories?.length))
 
@@ -66,14 +66,14 @@ const isCategoryActive = (categoryUuid: string) => {
   return activeCategory.value?.uuid === categoryUuid
 }
 
-const onSubcategoryEnter = (category?: HeaderCatalogTypes.One) => {
+const onSubcategoryEnter = (category?: ProductCatalogTypes.One) => {
   if (activeSubcategory.value) {
     activeSubcategory.value = undefined
   }
   activeSubcategory.value = category
 }
 
-const onCategoryEnter = (category: HeaderCatalogTypes.One) => {
+const onCategoryEnter = (category: ProductCatalogTypes.One) => {
   activeCategory.value = category
   activeSubcategory.value = undefined
 }

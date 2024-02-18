@@ -25,12 +25,12 @@
   }
 }
 
-@mixin truncate($lines: 3, $truncation-boundary: 100%) {
+@mixin truncate($lines: 3, $truncation-boundary: 100%, $display: -webkit-box) {
 	max-width: $truncation-boundary;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	display: -webkit-box;
+	display: $display;
 	-webkit-box-orient: vertical;
 	-webkit-line-clamp: $lines;
 }

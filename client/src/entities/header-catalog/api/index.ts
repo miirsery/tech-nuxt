@@ -1,8 +1,8 @@
 import useFetchWrap from "#shared/api/useFetchWrap";
-import { type HeaderCatalogTypes } from "#entities/header-catalog";
+import { type ProductCatalogTypes } from "#entities/header-catalog";
 
 const getAll = async () => {
-  return await useFetchWrap<HeaderCatalogTypes.All>({
+  return await useFetchWrap<ProductCatalogTypes.All>({
     url: '/api/fake/header-catalog',
     fetchOptions: {
       method: 'get'
