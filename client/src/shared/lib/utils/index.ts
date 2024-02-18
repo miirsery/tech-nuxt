@@ -1,1 +1,2 @@
-export { snakeToCamel } from './snakeToCamel'
+export { changeSnakeCaseToCamel } from './snakeToCamel'
+export { markText } from './markText'

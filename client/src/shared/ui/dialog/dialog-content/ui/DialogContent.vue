@@ -4,7 +4,9 @@
       <slot v-if="slots.header" name="header" />
 
       <template v-else>
-        <h5 v-if="props.title" class="ui-dialog-content__header-title">
+        <slot v-if="slots['header-content']" name="header-content" />
+
+        <h5 v-if="props.title && !slots.header" class="ui-dialog-content__header-title">
           {{ props.title }}
         </h5>
 
@@ -44,8 +46,10 @@ type Emits = {
 }
 
 type Slots = {
+  default?: () => HTMLElement
   header?: () => HTMLElement
   footer?: () => HTMLElement
+  'header-content'?: () => HTMLElement
 }
 
 const props = defineProps<Props>()
@@ -55,7 +59,7 @@ const slots = defineSlots<Slots>()
 const uiDialogRef = ref<HTMLDivElement | null>(null)
 
 const isHeaderVisible = computed(() => {
-  return props?.title || slots.footer || props.showClose
+  return props?.title || slots.footer || props.showClose || slots["header-content"]
 })
 const uiDialogClasses = computed(() => {
   return [

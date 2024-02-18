@@ -51,8 +51,7 @@
         </nav>
 
         <nav class="ui-header__buttons">
-          <!-- DEBT: Добавить вызов компонента поиска -->
-          <button type="button">
+          <button type="button" @click="isSearchDialogVisible = true">
             <ui-icon name="search-normal" />
           </button>
 
@@ -76,15 +75,18 @@
         </nav>
       </div>
     </div>
+
+    <header-search v-model:visible="isSearchDialogVisible" />
   </header>
 </template>
 <script setup lang="ts">
-import {UiIcon, UiSkeleton, UiTooltip} from "#shared/ui";
+import {UiDialog, UiIcon, UiSkeleton, UiTooltip} from "#shared/ui";
 import {ROUTE_NAMES} from "#shared/constants";
 import {ref, watch} from "vue";
 import {darkening} from "#widgets/header/utils/darkening";
 import HeaderCatalog from "#widgets/header/header-catalog/ui/HeaderCatalog.vue";
-import HeaderProfile from "#widgets/header/header/header-profile/ui/HeaderProfile.vue";
+import HeaderProfile from "#widgets/header/header-profile/ui/HeaderProfile.vue";
+import HeaderSearch from "#widgets/header/header-search/ui/HeaderSearch.vue";
 
 type Emits = {
   (event: 'open-auth'): void
@@ -94,6 +96,7 @@ const emits = defineEmits<Emits>()
 
 const headerRef = ref<HTMLDivElement>()
 const isAuthorized = ref(false)
+const isSearchDialogVisible = ref(false)
 
 const onHover = (value: boolean) => {
   darkening(value, headerRef)
@@ -216,6 +219,10 @@ const onHover = (value: boolean) => {
 
   :deep(.ui-tooltip-content) {
     border-radius: 0 0 8px 8px;
+  }
+
+  :deep(.ui-dialog-content) {
+    padding: 32px 48px 60px;
   }
 }
 </style>

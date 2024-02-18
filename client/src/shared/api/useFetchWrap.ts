@@ -1,15 +1,7 @@
 import type { AvailableRouterMethod, NitroFetchOptions, NitroFetchRequest } from 'nitropack'
 import type { AsyncDataOptions } from 'nuxt/dist/app/composables/asyncData';
-import {snakeToCamel} from "#shared/lib/utils";
+import {changeSnakeCaseToCamel} from "#shared/lib/utils";
 import {useAsyncData} from "#app/composables/asyncData";
-
-type ErrorType = {
-  statusCode: number
-  error: {
-    type: string
-    description: string
-  }
-}
 
 type ResponseType<T> = {
   data: T
@@ -17,20 +9,26 @@ type ResponseType<T> = {
   messages: Array<string>
 }
 
-type FetchWrapOptionsType<T, U> = {
+type FetchWrapOptionsType<T> = {
   url: string
   fetchOptions?: NitroFetchOptions<NitroFetchRequest & AvailableRouterMethod<string>>
-  dataOptions?: AsyncDataOptions<ResponseType<T>, ResponseType<U>>
+  dataOptions?: AsyncDataOptions<ResponseType<T>>
 }
 
-export default async <T, U = unknown>({ url, dataOptions = {}, fetchOptions = {} }: FetchWrapOptionsType<T, U>) => {
+export default async <
+  T extends Record<string, any> = Record<string, any>
+>({
+  url,
+  dataOptions = {},
+  fetchOptions = {}
+}: FetchWrapOptionsType<T>) => {
   // const runtimeConfig = useRuntimeConfig()
   const uniqueKey = url
 
   // const baseUrl =
   //   process.env.NODE_ENV === 'production' || process.server ? runtimeConfig.public.env.NUXT_VUE_APP_BASE_URI : ''
 
-  return useAsyncData<ResponseType<T>, ErrorType>(
+  return useAsyncData<ResponseType<T>, ResponseType<T>, ResponseType<T>>(
     uniqueKey,
     () =>
       $fetch<ResponseType<T>>(uniqueKey, {
@@ -39,7 +37,14 @@ export default async <T, U = unknown>({ url, dataOptions = {}, fetchOptions = {}
         ...fetchOptions,
       }),
     {
-      transform: (response): ResponseType<U> => snakeToCamel<ResponseType<T>>(response.data)
+      transform: (response): ResponseType<T> => {
+        return {
+          data: changeSnakeCaseToCamel(response.data as T),
+          errors: response.errors,
+          messages: response.messages,
+        };
+      },
+      ...(dataOptions ? dataOptions : {}),
     }
   )
 }

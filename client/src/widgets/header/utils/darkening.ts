@@ -1,6 +1,15 @@
 import type {Ref} from "vue";
 
-// FIXME: Добавить плавное появление.
+const removeNode = (node: HTMLElement | null) => {
+  if (node) {
+    node.style.opacity = '0'
+
+    setTimeout(() => {
+      node.remove()
+    }, 300)
+  }
+}
+
 export const darkening = (isHovering = false, headerRef?: Ref<HTMLDivElement | undefined>) => {
   if (process.server || !headerRef?.value) return
 
@@ -14,8 +23,8 @@ export const darkening = (isHovering = false, headerRef?: Ref<HTMLDivElement | u
   darkBackgroundNode.style.right = '0px'
   darkBackgroundNode.style.bottom = '0px'
   darkBackgroundNode.style.top = `${headerClientRect.height}px`
-  darkBackgroundNode.style.position = 'absolute'
   darkBackgroundNode.style.backgroundColor = 'var(--color-dark-60)'
+  darkBackgroundNode.style.zIndex = '999'
 
   const darkBackgroundNodeInDom = document.getElementById('dark-background')
 
@@ -23,7 +32,7 @@ export const darkening = (isHovering = false, headerRef?: Ref<HTMLDivElement | u
     if (!darkBackgroundNodeInDom) {
       document.body.appendChild(darkBackgroundNode)
     }
-  } else (
-    darkBackgroundNodeInDom?.remove()
-  )
+  } else {
+    removeNode(darkBackgroundNodeInDom)
+  }
 }

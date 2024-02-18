@@ -4,16 +4,13 @@
     :to="appendTo"
     :disabled="appendTo !== 'body' ? false : !appendToBody"
     >
-    <div :class="props.class">
-      <transition
-        name="fade"
-        appear
-      >
+    <div :class="['ui-dialog', props.class]">
+      <transition>
         <div
           v-if="modelValue"
+          :style="{ zIndex: props.zIndex }"
           class="ui-dialog__overlay"
           @click="handleClose"
-          :style="{ zIndex: props.zIndex }"
         >
           <div
             role="dialog"
@@ -26,6 +23,10 @@
               @close="handleClose"
             >
               <slot />
+
+              <template v-if="slots?.['header-content']" #header-content>
+                <slot name="header-content" />
+              </template>
             </dialog-content>
           </div>
         </div>
@@ -35,7 +36,7 @@
 </template>
 
 <script lang="ts" setup>
-// DEBT: Улучшить анимацию появления. Разнообразить список анимаций.
+// DEBT: Разнообразить список анимаций.
 import DialogContent from "#shared/ui/dialog/dialog-content/ui/DialogContent.vue";
 
 type Props = {
@@ -48,6 +49,11 @@ type Props = {
   fullScreen?: boolean
 }
 
+type Slots = {
+  default?: () => HTMLElement
+  'header-content'?: () => HTMLElement
+}
+
 const props = withDefaults(defineProps<Props>(), {
   zIndex: 100,
   appendTo: 'body',
@@ -55,6 +61,7 @@ const props = withDefaults(defineProps<Props>(), {
   showClose: false,
   fullScreen: false,
 })
+const slots = defineSlots<Slots>()
 
 const modelValue = defineModel('modelValue', {
   type: Boolean,
@@ -84,13 +91,13 @@ defineOptions({
   }
 }
 
-.fade-enter-active,
-.fade-leave-active {
+.v-enter-active,
+.v-leave-active {
   transition: opacity var(--animation-time) linear;
 }
 
-.fade-enter,
-.fade-leave-to {
+.v-enter-from,
+.v-leave-to {
   opacity: 0;
 }
 </style>

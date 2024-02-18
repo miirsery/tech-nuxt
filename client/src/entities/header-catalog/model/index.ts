@@ -1,14 +1,14 @@
 import {readonly, ref} from "vue";
-import {headerCatalogApi, type HeaderCatalogTypes} from "#entities/header-catalog";
+import {headerCatalogApi, type ProductCatalogTypes} from "#entities/header-catalog";
 
-const catalogData = ref<HeaderCatalogTypes.All>()
+const catalogData = ref<ProductCatalogTypes.All>()
 
 export const useHeaderCatalog = () => {
   const getCatalogData = async () => {
     const { data } = await headerCatalogApi.getAll()
 
     if (data.value) {
-      catalogData.value = data.value
+      catalogData.value = data.value.data
     }
   }
 

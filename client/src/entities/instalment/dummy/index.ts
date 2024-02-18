@@ -1,6 +1,6 @@
 import type {InstalmentTypes} from "#entities/instalment/types";
 
-export const INSTALMENT_DUMMY_DATA: InstalmentTypes.All = [
+export const INSTALMENT_DUMMY_DATA: InstalmentTypes.ResponseAll = [
   {
     id: '8967856',
     images: [

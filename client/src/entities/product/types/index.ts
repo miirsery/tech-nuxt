@@ -1,4 +1,4 @@
-export namespace HeaderCatalogTypes {
+export namespace ProductCatalogTypes {
   export type ResponseOne = {
     uuid: string
     icon_name: string

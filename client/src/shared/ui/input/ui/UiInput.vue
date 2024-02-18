@@ -191,6 +191,7 @@ const uiInputClasses = computed(() => [
   { 'ui-input--disabled': isDisabled.value },
   { 'ui-input--hovered': isHovered.value },
   { 'ui-input--with-prefix': isPrefixVisible.value },
+  { 'ui-input--with-suffix': isSuffixVisible.value },
   { 'ui-input--not-editable': isNotEditable.value },
   { 'ui-input--not-resize': !props.resize },
   props.class,
@@ -447,6 +448,12 @@ defineExpose<UiInputExposeType>({
       #{$root}__label {
         left: 22px;
       }
+    }
+  }
+
+  &--with-suffix {
+    #{$root}__label {
+      white-space: nowrap;
     }
   }
 

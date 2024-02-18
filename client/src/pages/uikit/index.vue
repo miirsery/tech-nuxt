@@ -263,6 +263,8 @@
               Headphone
             </ui-breadcrumbs-item>
           </ui-breadcrumbs>
+
+          <ui-autocomplete v-model="searchValue" :suggestions="suggestions" label="What can we help you to find ?" @search="searchHandler" />
         </div>
       </div>
     </div>
@@ -300,7 +302,7 @@ import {
   UiProductCharacteristics,
   UiTabPane,
   UiTabs,
-  UiFormItem
+  UiFormItem, UiAutocomplete
 } from "#shared/ui";
 import {ChangeFullName} from "#features/profile";
 import {ROUTE_NAMES} from "#shared/constants";
@@ -311,8 +313,25 @@ useHead({
 
 const value = ref('')
 const activeTab = ref('first')
+const searchValue = ref('')
 const isDialogVisible = ref(false)
 const isChecked = ref(false)
+
+type OptionType = {
+  label: string
+  uuid: string
+}
+
+const suggestions = ref<Array<OptionType>>([]);
+
+const searchHandler = (query: string) => {
+  suggestions.value = [
+    {
+      uuid: 'qweqweqew',
+      label: 'Привет'
+    }
+  ]
+}
 
 const characteristics = [
   {
@@ -349,6 +368,7 @@ const characteristics = [
   padding: 20px;
   border: 1px dashed #9747FF;
   border-radius: 8px;
+  flex-wrap: wrap;
 }
 
 .column {

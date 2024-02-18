@@ -114,6 +114,7 @@ defineExpose({
     align-items: center;
     color: inherit;
     transition: color var(--animation-time) linear;
+    white-space: nowrap;
 	}
 
 	&__prefix {
