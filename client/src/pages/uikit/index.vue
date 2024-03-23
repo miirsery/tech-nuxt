@@ -255,8 +255,8 @@
               Home
             </ui-breadcrumbs-item>
 
-            <ui-breadcrumbs-item :to="ROUTE_NAMES.PRODUCTS">
-              Products
+            <ui-breadcrumbs-item :to="ROUTE_NAMES.CATALOG">
+              Catalog
             </ui-breadcrumbs-item>
 
             <ui-breadcrumbs-item>

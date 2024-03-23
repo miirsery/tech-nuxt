@@ -35,8 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import {definePageMeta, useSeoMeta} from "#imports";
-import {useBreadcrumbs} from "#widgets/base-layout-breadcrumbs";
+import {useBreadcrumbs} from "#widgets/base-breadcrumbs";
 import {UiButton, UiForm, UiFormItem, UiIcon, UiInput} from "#shared/ui";
 import {ref} from "vue";
 import {NuxtLink} from "#components";

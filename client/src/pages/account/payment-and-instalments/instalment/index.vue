@@ -91,9 +91,8 @@
 
 <script setup lang="ts">
 // DEBT: Добавить красивый пересчет subtotal.
-import {useBreadcrumbs} from "#widgets/base-layout-breadcrumbs";
+import {useBreadcrumbs} from "#widgets/base-breadcrumbs";
 import {computed, ref} from "vue";
-import {definePageMeta, useSeoMeta} from "#imports";
 import {
   UiTable,
   UiTableHeader,

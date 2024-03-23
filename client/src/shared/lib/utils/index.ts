@@ -1,2 +1,4 @@
-export { changeSnakeCaseToCamel } from './snakeToCamel'
-export { markText } from './markText'
+export { markText, changeSnakeCaseToCamel } from './text-formatter'
+export { ensureArray } from './array'
+export * from './types'
+

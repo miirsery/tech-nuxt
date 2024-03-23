@@ -9,8 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import {useBreadcrumbs} from "#widgets/base-layout-breadcrumbs";
-import {definePageMeta, useSeoMeta} from "#imports";
+import {useBreadcrumbs} from "#widgets/base-breadcrumbs";
 import {ref} from "vue";
 import AccountIdentificationForm from "pages/account/personal-data/ui/AccountIdentificationForm.vue";
 

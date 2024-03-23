@@ -1,4 +1,3 @@
-import {defineNuxtPlugin} from "#app";
 import type {DirectiveBinding} from "vue";
 
 export default defineNuxtPlugin((nuxtApp) => {

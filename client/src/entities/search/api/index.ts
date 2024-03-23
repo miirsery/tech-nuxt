@@ -1,4 +1,4 @@
-import useFetchWrap from "#shared/api/useFetchWrap";
+import useFetchWrap from "#shared/api/use-fetch-wrap";
 
 const searchProducts = async (query: string) => {
   return await useFetchWrap({
