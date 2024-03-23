@@ -18,6 +18,9 @@ export default defineNuxtConfig({
 			enabled: true,
 		},
 	},
+  app: {
+    pageTransition: { name: 'page', mode: 'out-in' }
+  },
   image: {
     quality: 80,
     format: ['webp'],
@@ -32,9 +35,6 @@ export default defineNuxtConfig({
     },
     domains: ['*']
   },
-	vue: {
-		defineModel: true,
-	},
 	typescript: {
 		strict: true,
 	},
@@ -60,9 +60,6 @@ export default defineNuxtConfig({
 		middleware: './src/app/middleware',
 		pages: './src/pages',
 	},
-	imports: {
-		autoImport: false,
-	},
 	components: {
 		global: false,
 		dirs: [],
@@ -76,6 +73,7 @@ export default defineNuxtConfig({
 					additionalData: `
             @use "styles/additionals/variables/index.scss" as *;
             @use "styles/additionals/mixins/index.scss" as *;
+            @use "styles/additionals/project/mixins/index.scss" as *;
           `,
 				},
 			},

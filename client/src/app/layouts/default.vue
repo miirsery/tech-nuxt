@@ -3,7 +3,7 @@
     <ui-header @open-auth="authFormVisible = true" />
 
     <div v-if="isBreadcrumbsVisible" class="container">
-      <base-layout-breadcrumbs />
+      <base-breadcrumbs />
     </div>
 
     <div class="default-layout__content">
@@ -18,11 +18,10 @@
 import {UiHeader} from "#widgets/header";
 import {AuthForm} from "#widgets/guest";
 import {ref} from "vue";
-import {BaseLayoutBreadcrumbs} from "#widgets/base-layout-breadcrumbs";
+import {BaseBreadcrumbs, useBreadcrumbs} from "#widgets/base-breadcrumbs";
 import {ROUTE_NAMES, type RouteNamesAllValuesType, type RouteNamesValueType} from "#shared/constants";
 import {computed} from "vue";
 import {useRoute} from "vue-router";
-import {useBreadcrumbs} from "#widgets/base-layout-breadcrumbs";
 
 const route = useRoute()
 

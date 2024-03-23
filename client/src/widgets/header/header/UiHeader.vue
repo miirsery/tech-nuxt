@@ -25,9 +25,9 @@
                 Home
               </nuxt-link>
             </li>
-            <li class="ui-header__link">
-              <nuxt-link :to="{ name: ROUTE_NAMES.PRODUCTS }">
-                Products
+            <li :class="['ui-header__link', { active: isCatalogActive }]">
+              <nuxt-link :to="{ name: ROUTE_NAMES.CATALOG }">
+                Catalog
               </nuxt-link>
             </li>
   <!--  DEBT: Ссылки скрыты из-за того, что данных страниц нет | START-->
@@ -82,11 +82,12 @@
 <script setup lang="ts">
 import {UiDialog, UiIcon, UiSkeleton, UiTooltip} from "#shared/ui";
 import {ROUTE_NAMES} from "#shared/constants";
-import {ref, watch} from "vue";
+import {computed, ref, watch} from "vue";
 import {darkening} from "#widgets/header/utils/darkening";
 import HeaderCatalog from "#widgets/header/header-catalog/ui/HeaderCatalog.vue";
 import HeaderProfile from "#widgets/header/header-profile/ui/HeaderProfile.vue";
 import HeaderSearch from "#widgets/header/header-search/ui/HeaderSearch.vue";
+import {useRoute} from "vue-router";
 
 type Emits = {
   (event: 'open-auth'): void
@@ -94,9 +95,13 @@ type Emits = {
 
 const emits = defineEmits<Emits>()
 
+const route = useRoute()
+
 const headerRef = ref<HTMLDivElement>()
 const isAuthorized = ref(false)
 const isSearchDialogVisible = ref(false)
+
+const isCatalogActive = computed(() => route.matched[0].name?.includes(ROUTE_NAMES.CATALOG))
 
 const onHover = (value: boolean) => {
   darkening(value, headerRef)
@@ -149,27 +154,9 @@ const onHover = (value: boolean) => {
   }
 
   &__link {
-    :deep(.router-link-active) {
-      position: relative;
-
-      &::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        height: 1px;
-        border-bottom: 1px solid transparent;
-        border-image: linear-gradient(
-            147.38deg,
-            var(--color-primary-30) 0,
-            var(--color-primary-70) 50.93%,
-            var(--color-primary-30) 100%,
-        );
-        border-image-slice: 1;
-        width: 100% !important; // Перекрывает width в ui-header
-        transition: width var(--animation-time) linear;
-      }
+    :deep(.router-link-active),
+    &.active a {
+      @include activeRouteColor();
     }
 
     a {

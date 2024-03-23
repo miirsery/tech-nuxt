@@ -5,7 +5,6 @@
 </template>
 
 <script lang="ts" setup>
-import {definePageMeta} from "#imports";
 import {ROUTE_NAMES} from "#shared/constants";
 
 definePageMeta({

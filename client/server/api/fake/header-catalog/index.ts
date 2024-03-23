@@ -1,5 +1,5 @@
 import { defineEventHandler } from "h3";
-import {HEADER_CATALOG_DUMMY_DATA} from "#entities/header-catalog";
+import {HEADER_CATALOG_DUMMY_DATA} from "#entities/catalog";
 
 export default defineEventHandler(() => {
   return {

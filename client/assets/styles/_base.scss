@@ -171,6 +171,15 @@ a {
   display: block;
 }
 
+.page-enter-active,
+.page-leave-active {
+  transition: all var(--animation-time);
+}
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+  filter: blur(1rem);
+}
 
 @keyframes fade {
   from {

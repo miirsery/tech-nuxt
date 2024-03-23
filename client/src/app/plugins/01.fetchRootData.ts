@@ -1,8 +1,7 @@
-import {defineNuxtPlugin} from "#imports";
-import {useHeaderCatalog} from "#entities/header-catalog";
+import {useCatalog} from "#entities/catalog";
 
 export default defineNuxtPlugin(async () => {
-  const { getCatalogData } = useHeaderCatalog()
+  const { getCatalogData } = useCatalog()
 
   await getCatalogData()
 })

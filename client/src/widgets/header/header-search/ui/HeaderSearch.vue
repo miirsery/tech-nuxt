@@ -80,7 +80,7 @@ import {onUnmounted, ref, watch} from "vue";
 import {searchApi} from "#entities/search";
 import {$fetch} from "ofetch";
 import {markText} from "#shared/lib/utils";
-import {HEADER_CATALOG_DUMMY_DATA} from "#entities/header-catalog";
+import {HEADER_CATALOG_DUMMY_DATA} from "../../../../entities/catalog";
 import {ProductPreviewCard} from "#entities/product";
 
 const searchValue = ref('')

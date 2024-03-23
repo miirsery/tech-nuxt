@@ -50,12 +50,12 @@
 
 <script setup lang="ts">
 // DEBT: Перенести tooltip в открытие через hover под products.
-import {useHeaderCatalog} from "#entities/header-catalog";
+import {useCatalog} from "../../../../entities/catalog";
 import {UiButton, UiIcon} from "#shared/ui";
 import {computed, ref} from "vue";
 import {type ProductCatalogTypes, ProductPreviewCard} from "#entities/product";
 
-const { catalogData } = useHeaderCatalog()
+const { catalogData } = useCatalog()
 
 const activeCategory = ref<ProductCatalogTypes.One | undefined>(catalogData.value?.[0])
 const activeSubcategory = ref<ProductCatalogTypes.One>()
